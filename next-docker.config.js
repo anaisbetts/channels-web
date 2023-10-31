@@ -5,6 +5,7 @@ const nextConfig = {
     remotePatterns: [{ protocol: "https", hostname: "image.tmdb.org" }],
   },
   swcMinify: true,
+  output: "standalone",
 };
 
 module.exports = nextConfig
