@@ -6,7 +6,6 @@ import { unawaited } from '../utility'
 import { useAction } from '../action'
 
 import "@testing-library/jest-dom";
-import "@testing-library/jest-dom/extend-expect";
 
 describe('useAction', () => {
   let callCount = 0

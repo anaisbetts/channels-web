@@ -1,21 +1,21 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { fetchStatus } from "./servaction"
 import dynamic from "next/dynamic";
+
+import { usePromise } from "@/actions/promise";
+import { fetchStatus } from "./servaction";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false })
 
 export default function Status() {
-  const [data, setData] = useState("")
+	const data = usePromise(() => fetchStatus(), [])
 
-  useEffect(() => {
-		// NB: Without Server Actions, this fetch fails because of
-		// cross-site CORS issues!
-    fetchStatus().then(setData)
-  }, [])
+	if (data.isPending()) {
+		return <h2>Workin on it</h2>
+	}
 
-	const text = `home page. the text is ${JSON.stringify(data)}`
+	const text = `home page. the text is ${JSON.stringify(data.ok())}`
 	return <h2>{text}</h2>
 }
 
