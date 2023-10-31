@@ -13,7 +13,7 @@
       "cache": false
     },
     "ci": {
-      "dependsOn": ["build", "lint", "test", "build:docker"]
+      "dependsOn": ["build", "lint", "test"]
     }
   }
 }
