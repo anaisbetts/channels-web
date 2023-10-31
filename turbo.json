@@ -1,12 +1,19 @@
 {
-	"$schema": "https://turbo.build/schema.json",
-	"pipeline": {
-		"build": {
-			"outputs": [
-				".next/**",
-				"!.next/cache/**"
-			]
-		},
-		"lint": {}
-	}
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**"
+      ]
+    },
+    "lint": {},
+    "test": {},
+    "test:watch": {
+      "cache": false
+    },
+    "ci": {
+      "dependsOn": ["build", "lint", "test", "build:docker"]
+    }
+  }
 }
