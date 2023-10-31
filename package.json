@@ -7,7 +7,7 @@
     "build": "next build",
     "build:docker": "docker build -t channels-web .",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint && tsc",
     "test:watch": "jest --watch",
     "test": "jest --ci"
   },

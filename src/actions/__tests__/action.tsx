@@ -5,6 +5,9 @@ import { act, render, screen } from '@testing-library/react'
 import { unawaited } from '../utility'
 import { useAction } from '../action'
 
+import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/extend-expect";
+
 describe('useAction', () => {
   let callCount = 0
   beforeEach(() => (callCount = 0))
