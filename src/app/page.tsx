@@ -1,15 +1,12 @@
-import { status } from './server/api'
+import { status } from '@/server/api'
+import { redirect } from 'next/navigation'
 
 export default async function Home() {
   try {
     await status()
   } catch (e) {
-    return <h2>We need a client :P</h2>
+    redirect('/login')
   }
 
-  return (
-    <main className='min-h-screen'>
-      <h2>u did it</h2>
-    </main>
-  )
+  return <h2>u did it</h2>
 }

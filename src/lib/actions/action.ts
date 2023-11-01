@@ -1,11 +1,11 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { FormEvent, useCallback, useMemo, useRef, useState } from 'react'
 import { usePromise } from './promise'
 import { Result } from './result'
 import { promiseFinally, useMounted } from './utility'
 
 type ActionResult<T> = [
   // InvokeAction => Invokes the action, call this in an event handler
-  () => Promise<T | null>,
+  (e?: FormEvent<HTMLFormElement>) => Promise<T | null>,
   // Result => The last result from the command invocation
   Result<T | null>,
   // Reset => Resets the action to its unset value
@@ -39,6 +39,14 @@ export function useAction<T>(
     }
   }, deps)
 
+  const icPreventDefault = useMemo(
+    () => (e?: FormEvent<HTMLFormElement>) => {
+      e?.preventDefault()
+      return invokeCommand()
+    },
+    [invokeCommand]
+  )
+
   usePromise(async () => {
     if (runOnStart) {
       await invokeCommand()
@@ -47,8 +55,8 @@ export function useAction<T>(
   }, [invokeCommand])
 
   return useMemo(
-    () => [invokeCommand, current, reset],
-    [invokeCommand, current, reset]
+    () => [icPreventDefault, current, reset],
+    [icPreventDefault, current, reset]
   )
 }
 
