@@ -1,10 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import dynamic from "next/dynamic";
 
-import { usePromise } from "@/actions/promise";
-import { fetchStatus } from "./servaction";
+import { usePromise } from "@/lib/actions/promise";
+import { fetchStatus } from "../server/servaction";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false })
 
