@@ -2,6 +2,23 @@ export type Timestamp = number;
 export type IntAsString = string;
 export type DateFormattedString = string; // YYYY-MM-DD
 
+export interface StatusInformation {
+  arch: string;
+  booted: boolean;
+  description: string;
+  features: { [key: string]: boolean };
+  local_port: number;
+  name: string;
+  os: string;
+  prerelease: boolean;
+  start_time: string;
+  subscription: string;
+  suspected_proxies: null;
+  url: string;
+  username: string;
+  version: string;
+}
+
 export interface TVShow {
   id: IntAsString;
   name: string;
