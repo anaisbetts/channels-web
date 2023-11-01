@@ -1,6 +1,5 @@
-import { Suspense } from "react"
-import Status, { PlayThatVideo } from "./client"
 import Image from 'next/image'
+import Status, { PlayThatVideo } from "./client/client"
 
 export default function Home() {
   const sekrit = 'kF4Q0iM8G7wEC6vHiJLqu19nxwt'
