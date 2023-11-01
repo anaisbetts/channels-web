@@ -11,8 +11,10 @@ export default function Status() {
 	const data = usePromise(async () => {
 		await setBaseUrl('http://192.168.4.10:8089')
 		const ret = await status();
+
 		return ret;
 	}, [])
+
 
 	if (data.isPending()) {
 		return <h2>Workin on it</h2>

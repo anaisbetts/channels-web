@@ -5,23 +5,15 @@ import 'server-only'
 import { Axios } from 'axios';
 import { StatusInformation } from '@/lib/types';
 
-let client: Axios | null;
-
-function ensureClient(): Axios {
-  if (!client) {
-    throw new Error("No Channels Server set")
-  }
-
-  return client
-}
+import { ensureClient, setClient } from './internal-api';
 
 export async function setBaseUrl(url: string) {
-  client = new Axios({ baseURL: url, responseType: 'json', transformResponse: (res) => JSON.parse(res) })
+  setClient(new Axios({ baseURL: url, responseType: 'json', transformResponse: (res) => JSON.parse(res) }))
 
   try {
     await status();
   } catch (e) {
-    client = null
+    setClient(null)
     throw new Error("Failed to find Channels server")
   }
 
