@@ -1,11 +1,11 @@
 name: CI
- 
+
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
     types: [opened, synchronize]
- 
+
 jobs:
   build:
     name: Build and Test
@@ -13,16 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     # To use Remote Caching, uncomment the next lines and follow the steps below.
     env:
-     TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-     TURBO_REMOTE_ONLY: true
-     TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
- 
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_REMOTE_ONLY: true
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
     steps:
       - name: Check out code
         uses: actions/checkout@v3
         with:
           fetch-depth: 2
- 
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
@@ -40,6 +40,6 @@ jobs:
           # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-        
+
       - name: Run CI build
         run: npm i && npx turbo ci

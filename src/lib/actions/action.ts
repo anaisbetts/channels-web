@@ -9,7 +9,7 @@ type ActionResult<T> = [
   // Result => The last result from the command invocation
   Result<T | null>,
   // Reset => Resets the action to its unset value
-  () => void
+  () => void,
 ]
 
 export function useAction<T>(

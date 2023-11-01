@@ -1,16 +1,16 @@
 import 'server-only'
 
-import { Axios } from "axios";
+import { Axios } from 'axios'
 
-let client: Axios | null;
+let client: Axios | null
 
 export function setClient(newClient: Axios | null) {
-	client = newClient
+  client = newClient
 }
 
 export function ensureClient(): Axios {
   if (!client) {
-    throw new Error("No Channels Server set")
+    throw new Error('No Channels Server set')
   }
 
   return client
