@@ -21,7 +21,7 @@ export function MovieTile({ movie }: { movie: Movie }) {
       <Image
         className={c}
         style={{ maxWidth: '150px' }}
-        src={movie.thumbnail_url}
+        src={movie.image_url}
         alt={movie.title}
         width={200}
         height={300}
