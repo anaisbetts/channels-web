@@ -33,9 +33,6 @@ export async function fetchMovies(): Promise<Movie[]> {
   let client = await ensureClient()
 
   const ret = await client.get<Movie[]>('/api/v1/movies')
-  console.log(ret.status)
-  console.log(ret.statusText)
-
   return ret.data
 }
 
@@ -45,8 +42,6 @@ export async function fetchMediaInfo(media: PlayableMedia): Promise<MediaInfo> {
   const ret = await client.get<MediaInfo>(
     `/dvr/files/${media.id}/mediainfo.json`
   )
-  console.log(ret.status)
-  console.log(ret.statusText)
 
   return ret.data
 }
