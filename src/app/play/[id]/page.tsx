@@ -16,6 +16,5 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
   )
 
   const theMovie = byId[params.id]
-	<ReactVideo
   return <h2>The movie is {theMovie.title}</h2>
 }

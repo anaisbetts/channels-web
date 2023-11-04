@@ -1,6 +1,7 @@
 import { fetchMovies, status } from '@/server/api'
 import { redirect } from 'next/navigation'
 import MovieList from './MovieList'
+import { DebugNode } from './DebugNode'
 
 export default async function Home() {
   try {
@@ -12,9 +13,11 @@ export default async function Home() {
   const movieList = await fetchMovies()
 
   return (
-    <>
-      <h2 className='px-8 pt-8'>Movies</h2>
+    <section className='prose'>
+      <DebugNode movies={movieList} />
+
+      <h2 className='px-8 text-5xl'>Movies</h2>
       <MovieList movies={movieList.slice(0, 50)} />
-    </>
+    </section>
   )
 }

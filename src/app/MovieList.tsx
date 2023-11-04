@@ -3,7 +3,7 @@ import { Movie } from '@/lib/types'
 import Image from 'next/image'
 import Link from 'next/link'
 
-type MovieListProps = {
+export type MovieListProps = {
   movies: Movie[]
 }
 
@@ -15,12 +15,13 @@ export function MovieTile({ movie }: { movie: Movie }) {
     'drop-shadow-xl hover:drop-shadow-2xl'
   )
 
+  const href = `/play/${movie.id}`
   return (
-    <Link href='#' aria-label={movie.title}>
+    <Link href={href} aria-label={movie.title}>
       <Image
         className={c}
         style={{ maxWidth: '150px' }}
-        src={movie.image_url}
+        src={movie.thumbnail_url}
         alt={movie.title}
         width={200}
         height={300}

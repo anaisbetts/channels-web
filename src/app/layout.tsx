@@ -18,12 +18,12 @@ export default function RootLayout({
 }) {
   const bc = cx(
     sourceSans.className,
-    'v-screen h-screen prose bg-gradient-to-r from-purple-900 to-blue-900 text-white'
+    'v-screen h-screen bg-gradient-to-r from-purple-900 to-blue-900 text-white'
   )
   return (
     <html lang='en'>
       <body className={bc}>
-        <main className='py-10'>{children}</main>
+        <main>{children}</main>
       </body>
     </html>
   )
