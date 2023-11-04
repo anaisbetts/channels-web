@@ -2,8 +2,15 @@ import 'server-only'
 
 import { Axios } from 'axios'
 import storage from 'node-persist'
+import { mkdirp } from 'mkdirp'
+import path from 'path'
 
-const init = storage.init()
+// NB: If we don't do this, we will end up writing to a read-only part
+// inside the Docker image
+const storagePath = path.join(__dirname, '..', '..', '.next', 'storage')
+mkdirp.sync(storagePath)
+
+const init = storage.init({ dir: storagePath })
 
 export async function setClient(baseUrl: string | null) {
   await init
