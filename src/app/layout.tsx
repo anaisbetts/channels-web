@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Source_Sans_3 } from 'next/font/google'
 
 import './globals.css'
+import { cx } from '@/lib/actions/utility'
 
-const inter = Inter({ subsets: ['latin'] })
+const sourceSans = Source_Sans_3({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,10 +16,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const bc = cx(
+    sourceSans.className,
+    'v-screen h-screen bg-gradient-to-r from-purple-900 to-blue-900 text-white'
+  )
   return (
     <html lang='en'>
-      <body className={inter.className}>
-        <main className='min-h-screen'>{children}</main>
+      <body className={bc}>
+        <main>{children}</main>
       </body>
     </html>
   )

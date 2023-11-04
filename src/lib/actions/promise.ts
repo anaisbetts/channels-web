@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Observable, Subscription } from 'rxjs'
 
 import { Result } from './result'
-import { useMounted } from './utility'
+import { useMounted } from './utility-hooks'
 
 export function useObservable<T>(
   block: () => Observable<T>,
