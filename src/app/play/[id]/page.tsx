@@ -1,5 +1,7 @@
 import { Movie } from '@/lib/types'
-import { fetchMovies } from '@/server/api'
+import { fetchMediaInfo, fetchMovies } from '@/server/api'
+import { ensureClient } from '@/server/internal-api'
+import VideoPlayer from './video'
 
 export type PlayerPageProps = {
   params: { id: string }
@@ -16,5 +18,25 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
   )
 
   const theMovie = byId[params.id]
-  return <h2>The movie is {theMovie.title}</h2>
+
+  if (!theMovie) {
+    throw new Error(`Movie ${params.id} not found`)
+  }
+
+  const metadataInfo = await fetchMediaInfo(theMovie)
+  const vstream = metadataInfo.streams.find((x) => x.coded_height)
+  if (!vstream) {
+    throw new Error('Media has no video stream?')
+  }
+
+  // XXX: Hack out the base URL
+  const client = await ensureClient()
+
+  return (
+    <VideoPlayer
+      baseUrl={client.defaults.baseURL!}
+      video={theMovie}
+      frameSize={[vstream.coded_width!, vstream.coded_height!]}
+    />
+  )
 }
