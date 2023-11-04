@@ -2,7 +2,7 @@
 
 import 'server-only'
 
-import { Movie, StatusInformation } from '@/lib/types'
+import { MediaInfo, Movie, PlayableMedia, StatusInformation } from '@/lib/types'
 import { ensureClient, setClient } from './internal-api'
 
 export async function setBaseUrl(url: string) {
@@ -33,6 +33,18 @@ export async function fetchMovies(): Promise<Movie[]> {
   let client = await ensureClient()
 
   const ret = await client.get<Movie[]>('/api/v1/movies')
+  console.log(ret.status)
+  console.log(ret.statusText)
+
+  return ret.data
+}
+
+export async function fetchMediaInfo(media: PlayableMedia): Promise<MediaInfo> {
+  let client = await ensureClient()
+
+  const ret = await client.get<MediaInfo>(
+    `/dvr/files/${media.id}/mediainfo.json`
+  )
   console.log(ret.status)
   console.log(ret.statusText)
 
