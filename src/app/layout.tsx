@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Source_Sans_3 } from 'next/font/google'
 
 import './globals.css'
+import { cx } from '@/lib/actions/utility'
 
 const sourceSans = Source_Sans_3({ subsets: ['latin'] })
 
@@ -15,10 +16,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const bc = cx(
+    sourceSans.className,
+    'v-screen h-screen prose bg-gradient-to-r from-purple-900 to-blue-900 text-white'
+  )
   return (
     <html lang='en'>
-      <body className={sourceSans.className}>
-        <main className='prose min-h-screen'>{children}</main>
+      <body className={bc}>
+        <main className='py-10'>{children}</main>
       </body>
     </html>
   )
