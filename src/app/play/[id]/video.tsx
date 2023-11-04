@@ -3,7 +3,6 @@
 import { PlayableMedia } from '@/lib/types'
 import { useWindowSize } from '@uidotdev/usehooks'
 import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
 
 const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false })
 
@@ -23,6 +22,8 @@ export default function VideoPlayer({
   frameSize,
 }: VideoPlayerProps) {
   const { width, height } = useWindowSize()
+
+  ;(window as any).video = video
 
   const aspect = frameSize[0] / frameSize[1]
   const maxHeight = height ?? 480

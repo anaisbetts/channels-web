@@ -28,7 +28,7 @@ export default function RootLayout({
           <h2 className='p-4 text-2xl font-bold'>Channels</h2>
         </nav>
 
-        <main>{children}</main>
+        <main className='py-2'>{children}</main>
       </body>
     </html>
   )
