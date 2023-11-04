@@ -20,10 +20,15 @@ export default function RootLayout({
     sourceSans.className,
     'v-screen h-screen bg-gradient-to-r from-purple-900 to-blue-900 text-white'
   )
+
   return (
     <html lang='en'>
       <body className={bc}>
-        <main>{children}</main>
+        <nav className='bg-gradient-to-r from-purple-700 to-blue-700'>
+          <h2 className='p-4 text-2xl font-bold'>Channels</h2>
+        </nav>
+
+        <main className='py-2'>{children}</main>
       </body>
     </html>
   )
