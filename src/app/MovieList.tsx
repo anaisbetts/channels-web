@@ -1,7 +1,9 @@
 import { cx } from '@/lib/actions/utility'
 import { Movie } from '@/lib/types'
+import { ensureClient } from '@/server/internal-api'
 import Image from 'next/image'
 import Link from 'next/link'
+import { isCacheableImage } from './utility'
 
 export type MovieListProps = {
   movies: Movie[]
@@ -16,16 +18,33 @@ export function MovieTile({ movie }: { movie: Movie }) {
   )
 
   const href = `/play/${movie.id}`
+
+  const image = isCacheableImage(movie.image_url) ? (
+    <Image
+      className={c}
+      style={{ maxWidth: '150px' }}
+      src={movie.image_url}
+      alt={movie.title}
+      width={200}
+      height={300}
+    />
+  ) : (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      className={c}
+      style={{ maxWidth: '150px' }}
+      src={movie.image_url}
+      alt={movie.title}
+      decoding='async'
+      loading='lazy'
+      width={200}
+      height={300}
+    />
+  )
+
   return (
     <Link href={href} aria-label={movie.title}>
-      <Image
-        className={c}
-        style={{ maxWidth: '150px' }}
-        src={movie.image_url}
-        alt={movie.title}
-        width={200}
-        height={300}
-      />
+      {image}
     </Link>
   )
 }

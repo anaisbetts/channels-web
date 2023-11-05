@@ -5,7 +5,6 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'image.tmdb.org' },
       { protocol: 'http', hostname: 'fanc.tmsimg.com' },
-      { protocol: 'https', hostname: 'image.tmdb.org' },
       { protocol: 'https', hostname: 'tmsimg.fancybits.co' },
     ],
   },
