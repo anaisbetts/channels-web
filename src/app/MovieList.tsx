@@ -1,6 +1,5 @@
 import { cx } from '@/lib/actions/utility'
 import { Movie } from '@/lib/types'
-import { ensureClient } from '@/server/internal-api'
 import Image from 'next/image'
 import Link from 'next/link'
 import { isCacheableImage } from './utility'

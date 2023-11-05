@@ -11,5 +11,7 @@ const cachedHosts: Record<string, boolean> = {
 // itself, which of course will be dynamic
 export function isCacheableImage(url: string) {
   const origin = new URL(url).origin
-  return cachedHosts[origin] === true
+
+  const ret = cachedHosts[origin] === true
+  return ret
 }
