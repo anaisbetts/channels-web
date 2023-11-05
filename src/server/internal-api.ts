@@ -5,6 +5,7 @@ import storage from 'node-persist'
 import { mkdirp } from 'mkdirp'
 import fs from 'fs'
 import path from 'path'
+import { i, w } from './logger'
 
 let dataDir: string
 export function locateDataDir() {
@@ -20,7 +21,7 @@ export function locateDataDir() {
     fs.statSync(storagePath)
     sp = storagePath
   } catch (e) {
-    console.error('Using alternate storage path')
+    w('Using alternate storage path')
   }
 
   return (dataDir = sp)
@@ -33,7 +34,7 @@ function initializeStorage() {
   const tgt = path.join(locateDataDir(), 'storage')
   mkdirp.sync(tgt)
 
-  console.log(`Writing config to ${tgt}`)
+  i(`Writing config to ${tgt}`)
   return (init = storage.init({ dir: tgt }))
 }
 

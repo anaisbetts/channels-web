@@ -1,5 +1,6 @@
 'use client'
 
+import { e } from '@/lib/logger-client'
 import { useEffect } from 'react'
 
 export default function PlayerErrorPage({
@@ -10,7 +11,7 @@ export default function PlayerErrorPage({
   reset: () => void
 }) {
   useEffect(() => {
-    console.log(error)
+    e(error)
     return () => {}
   }, [error])
 
