@@ -4,7 +4,8 @@ import { mkdirp } from 'mkdirp'
 import path from 'path'
 import * as winston from 'winston'
 import 'winston-daily-rotate-file'
-import { locateDataDir } from './internal-api'
+
+import { locateDataDir } from './data-dir'
 import { Logger } from '@/lib/types'
 
 // Borrowed from https://github.com/sct/overseerr/blob/develop/server/logger.ts
