@@ -3,6 +3,7 @@
 import 'server-only'
 
 import {
+  Category,
   Episode,
   Media,
   MediaInfo,
@@ -67,13 +68,23 @@ function getFiltersQueryString(options: FetchOpts = {}) {
   return query
 }
 
+const yesIAmThatOldDontJudgeMe = /CD[12]/i
 export async function fetchMovies(options: FetchOpts = {}): Promise<Movie[]> {
   let client = await ensureClient()
 
   const ret = log(
     await client.get<Movie[]>(`/api/v1/movies${getFiltersQueryString(options)}`)
   )
-  return ret.data
+
+  // NB: Channels API seems to be Gigabugged - it returns a bunch of
+  // content that is very much Not Movies for the Movies endpoint. This
+  // seems like the best way to filter it out.
+  return ret.data.filter(
+    (x) =>
+      x.categories.includes(Category.Movie) &&
+      x.release_year !== undefined &&
+      !yesIAmThatOldDontJudgeMe.test(x.path)
+  )
 }
 
 export async function fetchTVSeries(
