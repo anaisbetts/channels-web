@@ -26,6 +26,7 @@ function locateLogDir() {
   const tgt = path.join(locateDataDir(), 'logs')
   mkdirp.sync(tgt)
 
+  w(`Writing logs to ${tgt}`)
   return (logDir = tgt)
 }
 

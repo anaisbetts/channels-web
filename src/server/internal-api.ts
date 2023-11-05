@@ -20,8 +20,9 @@ export function locateDataDir() {
   try {
     fs.statSync(storagePath)
     sp = storagePath
+    w(`Using storage path ${sp}`)
   } catch (e) {
-    w('Using alternate storage path')
+    w(`Using alternate storage path ${sp}`)
   }
 
   return (dataDir = sp)
@@ -34,7 +35,7 @@ function initializeStorage() {
   const tgt = path.join(locateDataDir(), 'storage')
   mkdirp.sync(tgt)
 
-  i(`Writing config to ${tgt}`)
+  w(`Writing storage to ${tgt}`)
   return (init = storage.init({ dir: tgt }))
 }
 
