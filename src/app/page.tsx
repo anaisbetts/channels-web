@@ -2,11 +2,15 @@ import { fetchMovies, status } from '@/server/api'
 import { redirect } from 'next/navigation'
 import MovieList from './MovieList'
 import { DebugNode } from './DebugNode'
+import { w } from '@/server/logger'
 
 export default async function Home() {
   try {
     await status()
   } catch (e) {
+    w('Failed to fetch status, redirecting to login')
+    w(e)
+
     redirect('/login')
   }
 
