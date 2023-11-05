@@ -168,3 +168,10 @@ export interface Stream {
   duration?: string
   duration_ts?: number
 }
+
+export type Logger = {
+  d: (...args: any[]) => void
+  i: (...args: any[]) => void
+  w: (...args: any[]) => void
+  e: (...args: any[]) => void
+}

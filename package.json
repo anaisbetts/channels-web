@@ -26,7 +26,10 @@
     "react-player": "^2.13.0",
     "rxjs": "^7.8.1",
     "server-only": "^0.0.1",
-    "sharp": "^0.32.6"
+    "sharp": "^0.32.6",
+    "stream": "^0.0.2",
+    "winston": "^3.11.0",
+    "winston-daily-rotate-file": "^4.7.1"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "0.4.2",

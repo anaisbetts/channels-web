@@ -5,6 +5,8 @@ import { setBaseUrl } from '@/server/api'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+import { d, e, w } from '@/lib/logger-client'
+
 export default function Login() {
   const router = useRouter()
   const [server, setServer] = useState<string | null>(null)
@@ -24,6 +26,7 @@ export default function Login() {
   const err = result.isErr()
   useEffect(() => {
     if (!err) return
+    e(err)
 
     setTimeout(() => {
       reset()
