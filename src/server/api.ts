@@ -2,7 +2,16 @@
 
 import 'server-only'
 
-import { MediaInfo, Movie, PlayableMedia, StatusInformation } from '@/lib/types'
+import {
+  Episode,
+  Media,
+  MediaInfo,
+  Movie,
+  PlayableMedia,
+  StatusInformation,
+  TVShow,
+} from '@/lib/types'
+
 import { ensureClient, setClient } from './internal-api'
 import { AxiosResponse } from 'axios'
 import { i, w } from './logger'
@@ -41,10 +50,56 @@ export async function status() {
   return (await ret.json()) as StatusInformation
 }
 
-export async function fetchMovies(): Promise<Movie[]> {
+export interface FetchOpts {
+  watched?: boolean
+  favorited?: boolean
+}
+
+function getFiltersQueryString(options: FetchOpts = {}) {
+  const [w, f] = [options.watched, options.favorited]
+  const opts = [
+    w !== undefined ? `watched=${w}` : null,
+    f !== undefined ? `favorited=${f}` : null,
+  ]
+
+  let query = opts.filter((x) => x !== null).join('&')
+  if (query.length > 0) query = `?${query}`
+  return query
+}
+
+export async function fetchMovies(options: FetchOpts = {}): Promise<Movie[]> {
   let client = await ensureClient()
 
-  const ret = log(await client.get<Movie[]>('/api/v1/movies'))
+  const ret = log(
+    await client.get<Movie[]>(`/api/v1/movies${getFiltersQueryString(options)}`)
+  )
+  return ret.data
+}
+
+export async function fetchTVSeries(
+  options: FetchOpts = {}
+): Promise<TVShow[]> {
+  let client = await ensureClient()
+
+  const ret = log(
+    await client.get<TVShow[]>(`/api/v1/shows${getFiltersQueryString(options)}`)
+  )
+  return ret.data
+}
+
+export async function fetchAllEpisodes(
+  show?: TVShow,
+  options: FetchOpts = {}
+): Promise<Media[]> {
+  let client = await ensureClient()
+
+  const basePath = show
+    ? `/api/v1/shows/${show.id}/episodes`
+    : '/api/v1/episodes'
+
+  const ret = log(
+    await client.get<Episode[]>(`${basePath}${getFiltersQueryString(options)}`)
+  )
   return ret.data
 }
 
