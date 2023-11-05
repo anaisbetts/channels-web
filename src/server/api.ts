@@ -4,6 +4,19 @@ import 'server-only'
 
 import { MediaInfo, Movie, PlayableMedia, StatusInformation } from '@/lib/types'
 import { ensureClient, setClient } from './internal-api'
+import { AxiosResponse } from 'axios'
+import { i, w } from './logger'
+
+function log<T, D>(res: AxiosResponse<T, D>): AxiosResponse<T, D> {
+  i(`${res.request?.method} ${res.request?.path}`)
+
+  if (res.status >= 200 && res.status < 300) {
+    return res
+  }
+
+  w(`${res.request?.path} failed: ${res.status} ${res.statusText}`)
+  return res
+}
 
 export async function setBaseUrl(url: string) {
   await setClient(url)
@@ -21,27 +34,22 @@ export async function setBaseUrl(url: string) {
 export async function status() {
   let client = await ensureClient()
 
-  const ret = await client.get<StatusInformation>('/status')
-  console.log(ret.status)
-  console.log(ret.statusText)
-  //console.log(ret.request)
-
+  const ret = log(await client.get<StatusInformation>('/status'))
   return ret.data
 }
 
 export async function fetchMovies(): Promise<Movie[]> {
   let client = await ensureClient()
 
-  const ret = await client.get<Movie[]>('/api/v1/movies')
+  const ret = log(await client.get<Movie[]>('/api/v1/movies'))
   return ret.data
 }
 
 export async function fetchMediaInfo(media: PlayableMedia): Promise<MediaInfo> {
   let client = await ensureClient()
 
-  const ret = await client.get<MediaInfo>(
-    `/dvr/files/${media.id}/mediainfo.json`
+  const ret = log(
+    await client.get<MediaInfo>(`/dvr/files/${media.id}/mediainfo.json`)
   )
-
   return ret.data
 }

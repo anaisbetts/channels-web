@@ -3,6 +3,7 @@ import { fetchMediaInfo, fetchMovies } from '@/server/api'
 import { ensureClient } from '@/server/internal-api'
 import Image from 'next/image'
 import VideoPlayer from './video'
+import { d } from '@/server/logger'
 
 export type PlayerPageProps = {
   params: { id: string }
@@ -27,7 +28,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
   const metadataInfo = await fetchMediaInfo(content)
   const vstream = metadataInfo.streams.find((x) => x.coded_height)
   if (!vstream) {
-    console.log(JSON.stringify(metadataInfo, null, 2))
+    d(JSON.stringify(metadataInfo, null, 2))
     throw new Error('Media has no video stream?')
   }
 
