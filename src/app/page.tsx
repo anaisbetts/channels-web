@@ -4,6 +4,8 @@ import MovieList from './MovieList'
 import { DebugNode } from './DebugNode'
 import { w } from '@/server/logger'
 
+export const revalidate = 10 // seconds
+
 export default async function Home() {
   try {
     await status()

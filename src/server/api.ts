@@ -34,8 +34,11 @@ export async function setBaseUrl(url: string) {
 export async function status() {
   let client = await ensureClient()
 
-  const ret = log(await client.get<StatusInformation>('/status'))
-  return ret.data
+  // NB: We must use fetch here or else this will be cached incorrectly
+  const { signal } = new AbortController()
+  const ret = await fetch(`${client.defaults.baseURL}/status`, { signal })
+
+  return (await ret.json()) as StatusInformation
 }
 
 export async function fetchMovies(): Promise<Movie[]> {
