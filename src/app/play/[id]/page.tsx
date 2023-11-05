@@ -4,6 +4,7 @@ import { ensureClient } from '@/server/internal-api'
 import Image from 'next/image'
 import VideoPlayer from './video'
 import { d } from '@/server/logger'
+import { isCacheableImage } from '@/app/utility'
 
 export type PlayerPageProps = {
   params: { id: string }
@@ -41,6 +42,33 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
     ', '
   )}`
 
+  const image = isCacheableImage(content.image_url) ? (
+    <Image
+      alt='Movie Cover Image'
+      className='rounded-md'
+      height='100'
+      src={content.image_url}
+      style={{
+        aspectRatio: '2/3',
+        objectFit: 'cover',
+      }}
+      width='100'
+    />
+  ) : (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      alt='Movie Cover Image'
+      className='rounded-md'
+      height='100'
+      src={content.image_url}
+      style={{
+        aspectRatio: '2/3',
+        objectFit: 'cover',
+      }}
+      width='100'
+    />
+  )
+
   return (
     <>
       <section>
@@ -53,17 +81,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
       <section className='mx-auto grid max-w-6xl items-start gap-6 px-4 py-6'>
         <div className='grid items-start gap-4 md:gap-10'>
           <div className='flex items-center space-x-4'>
-            <Image
-              alt='Movie Cover Image'
-              className='rounded-md'
-              height='100'
-              src={content.image_url}
-              style={{
-                aspectRatio: '2/3',
-                objectFit: 'cover',
-              }}
-              width='100'
-            />
+            {image}
             <div className='flex flex-col items-start space-y-1'>
               <h2 className='text-3xl font-bold'>{content.title}</h2>
               <h3 className='text-xl italic'>{information}</h3>
