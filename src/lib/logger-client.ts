@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Logger } from '@/lib/types'
 
 const isDev = process.env.NODE_ENV !== 'production'
