@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import 'server-only'
 
 import { mkdirp } from 'mkdirp'
@@ -27,7 +28,7 @@ function locateLogDir() {
   const tgt = path.join(locateDataDir(), 'logs')
   mkdirp.sync(tgt)
 
-  w(`Writing logs to ${tgt}`)
+  console.warn(`Writing logs to ${tgt}`)
   return (logDir = tgt)
 }
 
