@@ -15,3 +15,5 @@ export function isCacheableImage(url: string) {
   const ret = cachedHosts[origin] === true
   return ret
 }
+
+export const isDev = process.env.NODE_ENV !== 'production'

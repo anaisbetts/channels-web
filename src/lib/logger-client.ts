@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
+import { isDev } from '@/app/utility'
 import { Logger } from '@/lib/types'
-
-const isDev = process.env.NODE_ENV !== 'production'
 
 const log: Logger = {
   d: isDev ? console.debug.bind(console) : () => {},

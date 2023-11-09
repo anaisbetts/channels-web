@@ -315,8 +315,7 @@
   }
 
   .button-md svg,
-  button.input-action svg,
-  .plex-button svg {
+  button.input-action svg {
     @apply ml-2 mr-2 h-5 w-5 first:ml-0 last:mr-0;
   }
 

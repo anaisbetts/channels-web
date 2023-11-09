@@ -1,8 +1,8 @@
 import { fetchMovies, status } from '@/server/api'
 import { w } from '@/server/logger'
 import { redirect } from 'next/navigation'
-import { DebugNode } from './DebugNode'
-import MovieList from './MovieList'
+import MovieList from './components/MovieList'
+import { SearchBar } from './components/SearchBar'
 
 export const revalidate = 10 // seconds
 
@@ -20,10 +20,18 @@ export default async function Home() {
 
   return (
     <section className='prose'>
-      <DebugNode movies={movieList} />
+      <SearchBar allMovies={movieList}>
+        <h2 className='px-8 text-5xl'>Movies</h2>
+        <MovieList movies={movieList.slice(0, 50)} />
 
-      <h2 className='px-8 text-5xl'>Movies</h2>
-      <MovieList movies={movieList.slice(0, 50)} />
+        <h2 className='px-8 text-5xl'>A different List</h2>
+        <MovieList movies={movieList.slice(51, 100)} />
+
+        <h2 className='px-8 text-5xl'>A Third List</h2>
+        <MovieList
+          movies={movieList.filter((x) => x.title.indexOf('atrix') > 0)}
+        />
+      </SearchBar>
     </section>
   )
 }

@@ -2,7 +2,7 @@ import { cx } from '@/lib/actions/utility'
 import { Movie } from '@/lib/types'
 import Image from 'next/image'
 import Link from 'next/link'
-import { isCacheableImage } from './utility'
+import { isCacheableImage } from '../utility'
 
 export type MovieListProps = {
   movies: Movie[]
