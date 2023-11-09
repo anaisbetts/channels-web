@@ -1,10 +1,10 @@
+import { isCacheableImage } from '@/app/utility'
 import { Movie } from '@/lib/types'
 import { fetchMediaInfo, fetchMovies } from '@/server/api'
 import { ensureClient } from '@/server/internal-api'
+import { d } from '@/server/logger'
 import Image from 'next/image'
 import VideoPlayer from './video'
-import { d } from '@/server/logger'
-import { isCacheableImage } from '@/app/utility'
 
 export type PlayerPageProps = {
   params: { id: string }
@@ -17,7 +17,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
       acc[x.id] = x
       return acc
     },
-    {} as Record<string, Movie>
+    {} as Record<string, Movie>,
   )
 
   const content = byId[params.id]
@@ -39,7 +39,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
   const information = `${content.content_rating} | ${
     content.release_year
   } | ${Math.ceil(content.duration / 60)} minutes | ${content.genres?.join(
-    ', '
+    ', ',
   )}`
 
   const image = isCacheableImage(content.image_url) ? (

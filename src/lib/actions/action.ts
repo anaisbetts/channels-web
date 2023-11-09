@@ -16,7 +16,7 @@ type ActionResult<T> = [
 export function useAction<T>(
   block: () => Promise<T>,
   deps: React.DependencyList,
-  runOnStart = false
+  runOnStart = false,
 ): ActionResult<T> {
   const mounted = useMounted()
   const [current, setCurrent] = useState<Result<T | null>>(Result.ok(null))
@@ -45,7 +45,7 @@ export function useAction<T>(
       e?.preventDefault()
       return invokeCommand()
     },
-    [invokeCommand]
+    [invokeCommand],
   )
 
   usePromise(async () => {
@@ -57,13 +57,13 @@ export function useAction<T>(
 
   return useMemo(
     () => [icPreventDefault, current, reset],
-    [icPreventDefault, current, reset]
+    [icPreventDefault, current, reset],
   )
 }
 
 export function useAsyncCallbackDedup<T>(
   block: () => Promise<T>,
-  deps: React.DependencyList
+  deps: React.DependencyList,
 ): () => Promise<T | null> {
   const cur = useRef<Promise<T>>()
 

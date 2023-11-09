@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { Subject, firstValueFrom, take } from 'rxjs'
 
 import { act, render, screen } from '@testing-library/react'
-import { unawaited } from '../utility'
 import { useAction } from '../action'
+import { unawaited } from '../utility'
 
 import '@testing-library/jest-dom'
 
@@ -26,7 +26,7 @@ describe('useAction', () => {
         return callCount.toString()
       },
       [],
-      false
+      false,
     )
 
     // This is a Hack to let us call invokeCommand from the test

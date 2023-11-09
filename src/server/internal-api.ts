@@ -1,8 +1,8 @@
 import 'server-only'
 
 import { Axios } from 'axios'
-import storage from 'node-persist'
 import { mkdirp } from 'mkdirp'
+import storage from 'node-persist'
 import path from 'path'
 
 import { locateDataDir } from './data-dir'

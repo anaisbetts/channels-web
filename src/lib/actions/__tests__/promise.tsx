@@ -92,7 +92,7 @@ describe('useObservable', () => {
             d.add(() => unsub++)
           })
         }
-      />
+      />,
     )
 
     expect(await screen.findByText('Pending!')).toBeInTheDocument()
@@ -155,7 +155,7 @@ describe('usePromise', () => {
 
           return 'completed'
         },
-        [gate]
+        [gate],
       )
 
       if (box.isPending()) {
@@ -173,7 +173,7 @@ describe('usePromise', () => {
     const gate2 = new Subject<boolean>()
 
     const { rerender } = render(
-      <CancelComponent gate={firstValueFrom(gate1)} />
+      <CancelComponent gate={firstValueFrom(gate1)} />,
     )
 
     expect(cancelCount).toBe(0)

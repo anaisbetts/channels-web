@@ -20,7 +20,7 @@ export abstract class Result<T> {
   static fromPromise<T>(val: Promise<T>): Promise<Result<T>> {
     return val.then(
       (x) => Result.ok(x),
-      (ex) => Result.err(ex)
+      (ex) => Result.err(ex),
     )
   }
 
@@ -28,7 +28,7 @@ export abstract class Result<T> {
     return this.mapOrElse(
       () => false,
       () => false,
-      (x) => x === undefined
+      (x) => x === undefined,
     )
   }
 
@@ -68,7 +68,7 @@ export abstract class Result<T> {
   mapOrElse<N>(
     orElse: (err: any) => N,
     orPending: () => N,
-    fn: (val: T) => N
+    fn: (val: T) => N,
   ): N {
     if (this.isPending()) {
       return orPending()

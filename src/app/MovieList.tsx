@@ -13,7 +13,7 @@ export function MovieTile({ movie }: { movie: Movie }) {
     'flex items-center justify-center',
     'group relative transform transition-transform hover:scale-110',
     'rounded-lg object-cover group-hover:opacity-75 transition-opacity',
-    'drop-shadow-xl hover:drop-shadow-2xl'
+    'drop-shadow-xl hover:drop-shadow-2xl',
   )
 
   const href = `/play/${movie.id}`

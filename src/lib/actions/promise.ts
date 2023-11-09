@@ -6,7 +6,7 @@ import { useMounted } from './utility-hooks'
 
 export function useObservable<T>(
   block: () => Observable<T>,
-  deps?: React.DependencyList
+  deps?: React.DependencyList,
 ): Result<T> {
   const [ret, setRet] = useState(Result.pending<T>())
   const mounted = useMounted()
@@ -38,8 +38,8 @@ export function useObservable<T>(
             if (ret.isPending() && !set) {
               setRet(
                 Result.err(
-                  new Error('Observable must have at least one element')
-                )
+                  new Error('Observable must have at least one element'),
+                ),
               )
             }
           })
@@ -58,13 +58,13 @@ export function useObservable<T>(
 
 export function usePromise<T>(
   block: (isCancelled: { cancelled: boolean }) => Promise<T>,
-  deps: React.DependencyList
+  deps: React.DependencyList,
 ): Result<T> {
   return useObservable(() => fromCancellablePromise(block), deps)
 }
 
 export function fromCancellablePromise<T>(
-  block: (isCancelled: { cancelled: boolean }) => Promise<T>
+  block: (isCancelled: { cancelled: boolean }) => Promise<T>,
 ): Observable<T> {
   return new Observable<T>((subj) => {
     const done = { cancelled: false }
@@ -87,7 +87,7 @@ export function fromCancellablePromise<T>(
 
             subj.error(e)
           }
-        }
+        },
       )
     } catch (e) {
       if (!done.cancelled) {

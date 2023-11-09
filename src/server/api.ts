@@ -13,8 +13,8 @@ import {
   TVShow,
 } from '@/lib/types'
 
-import { ensureClient, setClient } from './internal-api'
 import { AxiosResponse } from 'axios'
+import { ensureClient, setClient } from './internal-api'
 import { i, w } from './logger'
 
 function log<T, D>(res: AxiosResponse<T, D>): AxiosResponse<T, D> {
@@ -73,7 +73,9 @@ export async function fetchMovies(options: FetchOpts = {}): Promise<Movie[]> {
   let client = await ensureClient()
 
   const ret = log(
-    await client.get<Movie[]>(`/api/v1/movies${getFiltersQueryString(options)}`)
+    await client.get<Movie[]>(
+      `/api/v1/movies${getFiltersQueryString(options)}`,
+    ),
   )
 
   // NB: Channels API seems to be Gigabugged - it returns a bunch of
@@ -83,24 +85,26 @@ export async function fetchMovies(options: FetchOpts = {}): Promise<Movie[]> {
     (x) =>
       x.categories.includes(Category.Movie) &&
       x.release_year !== undefined &&
-      !yesIAmThatOldDontJudgeMe.test(x.path)
+      !yesIAmThatOldDontJudgeMe.test(x.path),
   )
 }
 
 export async function fetchTVSeries(
-  options: FetchOpts = {}
+  options: FetchOpts = {},
 ): Promise<TVShow[]> {
   let client = await ensureClient()
 
   const ret = log(
-    await client.get<TVShow[]>(`/api/v1/shows${getFiltersQueryString(options)}`)
+    await client.get<TVShow[]>(
+      `/api/v1/shows${getFiltersQueryString(options)}`,
+    ),
   )
   return ret.data
 }
 
 export async function fetchAllEpisodes(
   show?: TVShow,
-  options: FetchOpts = {}
+  options: FetchOpts = {},
 ): Promise<Media[]> {
   let client = await ensureClient()
 
@@ -109,7 +113,7 @@ export async function fetchAllEpisodes(
     : '/api/v1/episodes'
 
   const ret = log(
-    await client.get<Episode[]>(`${basePath}${getFiltersQueryString(options)}`)
+    await client.get<Episode[]>(`${basePath}${getFiltersQueryString(options)}`),
   )
   return ret.data
 }
@@ -118,7 +122,7 @@ export async function fetchMediaInfo(media: PlayableMedia): Promise<MediaInfo> {
   let client = await ensureClient()
 
   const ret = log(
-    await client.get<MediaInfo>(`/dvr/files/${media.id}/mediainfo.json`)
+    await client.get<MediaInfo>(`/dvr/files/${media.id}/mediainfo.json`),
   )
   return ret.data
 }

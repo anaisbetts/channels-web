@@ -5,14 +5,14 @@ import { setBaseUrl } from '@/server/api'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { d, e, w } from '@/lib/logger-client'
+import { e } from '@/lib/logger-client'
 
 export default function Login() {
   const router = useRouter()
   const [server, setServer] = useState<string | null>(null)
   const [invoke, result, reset] = useAction(
     () => setBaseUrl(server ?? 'no'),
-    [server]
+    [server],
   )
 
   // We've got a valid server? Let's get out of here

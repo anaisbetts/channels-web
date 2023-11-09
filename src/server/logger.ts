@@ -6,8 +6,8 @@ import path from 'path'
 import * as winston from 'winston'
 import 'winston-daily-rotate-file'
 
-import { locateDataDir } from './data-dir'
 import { Logger } from '@/lib/types'
+import { locateDataDir } from './data-dir'
 
 // Borrowed from https://github.com/sct/overseerr/blob/develop/server/logger.ts
 
@@ -18,7 +18,7 @@ const hformat = winston.format.printf(
       msg += JSON.stringify(metadata)
     }
     return msg
-  }
+  },
 )
 
 let logDir: string
@@ -37,7 +37,7 @@ const logger = winston.createLogger({
   format: winston.format.combine(
     winston.format.splat(),
     winston.format.timestamp(),
-    hformat
+    hformat,
   ),
   transports: [
     new winston.transports.Console({
@@ -45,7 +45,7 @@ const logger = winston.createLogger({
         winston.format.colorize(),
         winston.format.splat(),
         winston.format.timestamp(),
-        hformat
+        hformat,
       ),
     }),
     new winston.transports.DailyRotateFile({

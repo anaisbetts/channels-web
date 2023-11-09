@@ -25,6 +25,6 @@ export function promiseFinally<T>(p: Promise<T>, block: () => unknown) {
     (e) => {
       block()
       return Promise.reject(e)
-    }
+    },
   )
 }

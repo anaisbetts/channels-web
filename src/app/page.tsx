@@ -1,8 +1,8 @@
 import { fetchMovies, status } from '@/server/api'
-import { redirect } from 'next/navigation'
-import MovieList from './MovieList'
-import { DebugNode } from './DebugNode'
 import { w } from '@/server/logger'
+import { redirect } from 'next/navigation'
+import { DebugNode } from './DebugNode'
+import MovieList from './MovieList'
 
 export const revalidate = 10 // seconds
 

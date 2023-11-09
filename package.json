@@ -28,6 +28,7 @@
     "server-only": "^0.0.1",
     "sharp": "^0.32.6",
     "stream": "^0.0.2",
+    "video.js": "^8.6.1",
     "winston": "^3.11.0",
     "winston-daily-rotate-file": "^4.7.1"
   },
@@ -51,6 +52,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8",
     "prettier": "^3.0.3",
+    "prettier-plugin-organize-imports": "^3.2.3",
     "prettier-plugin-tailwindcss": "^0.5.6",
     "tailwindcss": "^3.3.5",
     "turbo": "^1.10.16",
