@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Source_Sans_3 } from 'next/font/google'
 
 import { cx } from '@/lib/actions/utility'
+import Link from 'next/link'
 import './globals.css'
 
 const sourceSans = Source_Sans_3({ subsets: ['latin'] })
@@ -25,7 +26,9 @@ export default function RootLayout({
     <html lang='en'>
       <body className={bc}>
         <nav className='bg-gradient-to-r from-purple-700 to-blue-700'>
-          <h2 className='p-4 text-2xl font-bold'>Channels</h2>
+          <Link href='/'>
+            <h2 className='p-4 text-2xl font-bold'>Channels</h2>
+          </Link>
         </nav>
 
         <main className='py-2'>{children}</main>
