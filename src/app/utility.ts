@@ -1,6 +1,6 @@
 // NB: This needs to be synced with next.config.js
 const cachedHosts: Record<string, boolean> = {
-  'https://image.tmbd.org': true,
+  'https://image.tmdb.org': true,
   'http://fanc.tmsimg.com': true,
   'https://tmsimg.fancybits.co': true,
 }
@@ -15,3 +15,5 @@ export function isCacheableImage(url: string) {
   const ret = cachedHosts[origin] === true
   return ret
 }
+
+export const isDev = process.env.NODE_ENV !== 'production'

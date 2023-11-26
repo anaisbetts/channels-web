@@ -1,10 +1,30 @@
+import { Movie } from '@/lib/types'
 import { fetchMovies, status } from '@/server/api'
 import { w } from '@/server/logger'
 import { redirect } from 'next/navigation'
-import { DebugNode } from './DebugNode'
-import MovieList from './MovieList'
+import MovieList from './components/MovieList'
+import { SearchBar } from './components/SearchBar'
+import {
+  groupByGenre,
+  newAndNotable,
+  sortGenresByPopularity,
+} from './components/list-generation'
 
 export const revalidate = 10 // seconds
+
+interface MovieListWithHeaderProps {
+  header: string
+  movies: Movie[]
+}
+
+function MovieListWithHeader({ header, movies }: MovieListWithHeaderProps) {
+  return (
+    <section>
+      <h2 className='px-8 pb-4 pt-12 text-5xl font-bold'>{header}</h2>
+      <MovieList movies={movies} />
+    </section>
+  )
+}
 
 export default async function Home() {
   try {
@@ -18,12 +38,22 @@ export default async function Home() {
 
   const movieList = await fetchMovies()
 
-  return (
-    <section className='prose'>
-      <DebugNode movies={movieList} />
+  // Generate some interesting lists
+  const genres = groupByGenre(movieList)
+  const topFive = sortGenresByPopularity(genres, 3)
 
-      <h2 className='px-8 text-5xl'>Movies</h2>
-      <MovieList movies={movieList.slice(0, 50)} />
-    </section>
+  const topFiveMarkup = topFive.map(([genre, movies]) => (
+    <MovieListWithHeader key={genre} header={genre} movies={movies} />
+  ))
+
+  return (
+    <SearchBar allMovies={movieList}>
+      <MovieListWithHeader
+        header='New and Notable'
+        movies={newAndNotable(movieList)}
+      />
+
+      <>{topFiveMarkup}</>
+    </SearchBar>
   )
 }
