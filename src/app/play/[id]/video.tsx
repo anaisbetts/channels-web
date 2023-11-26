@@ -4,7 +4,6 @@ import { PlayableMedia } from '@/lib/types'
 import { useWindowSize } from '@uidotdev/usehooks'
 import dynamic from 'next/dynamic'
 import { useRef } from 'react'
-import ReactPlayer from 'react-player'
 
 const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false })
 
