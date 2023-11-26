@@ -4,6 +4,7 @@ import { PlayableMedia } from '@/lib/types'
 import { useWindowSize } from '@uidotdev/usehooks'
 import dynamic from 'next/dynamic'
 import { useRef } from 'react'
+import ReactPlayer from 'react-player'
 
 const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false })
 
@@ -24,6 +25,7 @@ export default function VideoPlayer({
 }: VideoPlayerProps) {
   const { height } = useWindowSize()
   const box = useRef<HTMLDivElement>(null)
+  const player = useRef<ReactPlayer>(null)
   const width = (box.current?.clientWidth ?? 640) - 20
 
   const aspect = frameSize[0] / frameSize[1]
@@ -39,10 +41,11 @@ export default function VideoPlayer({
   return (
     <div ref={box}>
       <ReactPlayer
+        ref={player}
         light={video.thumbnail_url}
         url={buildStreamUrlForVideo(baseUrl, video)}
-        width={videoWidth}
-        height={videoHeight}
+        width='100%'
+        height={player.current?.getDuration() ? '100%' : videoHeight}
         controls={true}
       />
     </div>
