@@ -1,4 +1,5 @@
 import { Movie } from '@/lib/types'
+import orderBy from 'lodash/fp/orderBy'
 
 export function groupByGenre(movies: Movie[]): Record<string, Movie[]> {
   return movies.reduce(
@@ -48,4 +49,18 @@ export function newAndNotable(movies: Movie[]): Movie[] {
   // If we don't get enough results for two weeks, scale it up to 4
   if (ret.length > 8) return ret
   return newAndNotableForTime(movies, Date.now() - twoWeeksOfTime * 2)
+}
+
+export function defaultMovieSort(movies: Movie[]): Movie[] {
+  const newMovies = newAndNotable(movies)
+  const lookup = newMovies.reduce(
+    (acc, movie) => {
+      acc[movie.title] = true
+      return acc
+    },
+    {} as Record<string, boolean>,
+  )
+
+  const restMovies = movies.filter((x) => !lookup[x.title])
+  return [...newMovies, ...orderBy(['title'], ['asc'], restMovies)]
 }
