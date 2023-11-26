@@ -70,14 +70,12 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
   )
 
   return (
-    <>
-      <section>
-        <VideoPlayer
-          baseUrl={client.defaults.baseURL!}
-          video={content}
-          frameSize={[vstream.coded_width!, vstream.coded_height!]}
-        />
-      </section>
+    <div className='grid grid-flow-row'>
+      <VideoPlayer
+        baseUrl={client.defaults.baseURL!}
+        video={content}
+        frameSize={[vstream.coded_width!, vstream.coded_height!]}
+      />
       <section className='mx-auto grid max-w-6xl items-start gap-6 px-4 py-6'>
         <div className='grid items-start gap-4 md:gap-10'>
           <div className='flex items-center space-x-4'>
@@ -93,6 +91,6 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
           </p>
         </div>
       </section>
-    </>
+    </div>
   )
 }
