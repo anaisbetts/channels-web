@@ -48,7 +48,7 @@ export default async function Home() {
   ))
 
   return (
-    <ActualLayout>
+    <ActualLayout showSearch>
       <SearchResult allMovies={movieList}>
         <MovieListWithHeader
           header='New and Notable'

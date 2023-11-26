@@ -6,11 +6,15 @@ import { SearchBar } from './SearchBar'
 
 export const SearchContext = createContext('')
 
+export interface ActualLayoutProps {
+  children: React.ReactNode
+  showSearch?: boolean
+}
+
 export default function ActualLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+  showSearch,
+}: ActualLayoutProps) {
   const [search, setSearch] = useState('')
 
   return (
@@ -19,9 +23,12 @@ export default function ActualLayout({
         <Link href='/'>
           <h2 className='p-4 text-2xl font-bold'>Channels</h2>
         </Link>
-        <div className='flex flex-grow'>
-          <SearchBar className='flex-grow' onChange={(e) => setSearch(e)} />
-        </div>
+
+        {showSearch && (
+          <div className='flex flex-grow'>
+            <SearchBar className='flex-grow' onChange={(e) => setSearch(e)} />
+          </div>
+        )}
       </nav>
 
       <main className='overflow-y-auto py-2'>{children}</main>
