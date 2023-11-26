@@ -1,6 +1,6 @@
 import { cx } from '@/lib/actions/utility'
+import { i } from '@/lib/logger-client'
 import { Movie } from '@/lib/types'
-import { i } from '@/server/logger'
 import Image from 'next/image'
 import Link from 'next/link'
 import { isCacheableImage } from '../utility'
