@@ -27,14 +27,14 @@ export function SearchBar({ allMovies, children }: SearchBarProps) {
     innerContent = <MovieList movies={result} />
   }
 
-  wnd.movies = allMovies
-  wnd.genres = groupByGenre(allMovies)
+  //wnd.movies = allMovies
+  //wnd.genres = groupByGenre(allMovies)
 
   return (
-    <section>
+    <>
       <div className='flex items-center justify-center'>
         <input
-          className='w-1/2 rounded-2xl border-2 border-gray-300 p-2 text-gray-900'
+          className='my-4 w-1/2 rounded-2xl border-2 border-gray-300 px-2 text-gray-900'
           type='search'
           placeholder='Search'
           value={search}
@@ -42,6 +42,6 @@ export function SearchBar({ allMovies, children }: SearchBarProps) {
         />
       </div>
       {innerContent}
-    </section>
+    </>
   )
 }

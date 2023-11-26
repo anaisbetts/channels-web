@@ -20,7 +20,7 @@ interface MovieListWithHeaderProps {
 function MovieListWithHeader({ header, movies }: MovieListWithHeaderProps) {
   return (
     <section>
-      <h2 className='px-8 py-4 text-5xl'>{header}</h2>
+      <h2 className='px-8 pb-4 pt-12 text-5xl font-bold'>{header}</h2>
       <MovieList movies={movies} />
     </section>
   )
