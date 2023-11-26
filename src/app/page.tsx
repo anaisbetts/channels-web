@@ -1,3 +1,4 @@
+import { Movie } from '@/lib/types'
 import { fetchMovies, status } from '@/server/api'
 import { w } from '@/server/logger'
 import { redirect } from 'next/navigation'
@@ -5,10 +6,25 @@ import MovieList from './components/MovieList'
 import { SearchBar } from './components/SearchBar'
 import {
   groupByGenre,
+  newAndNotable,
   sortGenresByPopularity,
 } from './components/list-generation'
 
 export const revalidate = 10 // seconds
+
+interface MovieListWithHeaderProps {
+  header: string
+  movies: Movie[]
+}
+
+function MovieListWithHeader({ header, movies }: MovieListWithHeaderProps) {
+  return (
+    <section>
+      <h2 className='px-8 py-4 text-5xl'>{header}</h2>
+      <MovieList movies={movies} />
+    </section>
+  )
+}
 
 export default async function Home() {
   try {
@@ -27,16 +43,15 @@ export default async function Home() {
   const topFive = sortGenresByPopularity(genres, 3)
 
   const topFiveMarkup = topFive.map(([genre, movies]) => (
-    <section key={genre}>
-      <h2 className='px-8 py-4 text-5xl'>{genre}</h2>
-      <MovieList movies={movies} />
-    </section>
+    <MovieListWithHeader key={genre} header={genre} movies={movies} />
   ))
 
   return (
     <SearchBar allMovies={movieList}>
-      <h2 className='px-8 py-4 text-5xl'>Movies</h2>
-      <MovieList movies={movieList.slice(0, 50)} />
+      <MovieListWithHeader
+        header='New and Notable'
+        movies={newAndNotable(movieList)}
+      />
 
       <>{topFiveMarkup}</>
     </SearchBar>
