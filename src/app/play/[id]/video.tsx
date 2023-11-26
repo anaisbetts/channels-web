@@ -24,7 +24,7 @@ export default function VideoPlayer({
 }: VideoPlayerProps) {
   const { height } = useWindowSize()
   const box = useRef<HTMLDivElement>(null)
-  const width = box.current?.clientWidth ?? 640
+  const width = (box.current?.clientWidth ?? 640) - 20
 
   const aspect = frameSize[0] / frameSize[1]
   const maxHeight = height ?? 480
