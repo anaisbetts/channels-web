@@ -4,8 +4,11 @@ import { PlayableMedia } from '@/lib/types'
 import { useWindowSize } from '@uidotdev/usehooks'
 import dynamic from 'next/dynamic'
 import { useRef } from 'react'
+import type ReactPlayer from 'react-player'
 
-const ReactPlayer = dynamic(() => import('react-player/lazy'), { ssr: false })
+const ReactPlayerElem = dynamic(() => import('react-player/lazy'), {
+  ssr: false,
+})
 
 export type VideoPlayerProps = {
   baseUrl: string
@@ -39,7 +42,7 @@ export default function VideoPlayer({
 
   return (
     <div ref={box}>
-      <ReactPlayer
+      <ReactPlayerElem
         ref={player}
         light={video.thumbnail_url}
         url={buildStreamUrlForVideo(baseUrl, video)}
