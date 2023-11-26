@@ -2,8 +2,9 @@ import { Movie } from '@/lib/types'
 import { fetchMovies, status } from '@/server/api'
 import { w } from '@/server/logger'
 import { redirect } from 'next/navigation'
+import ActualLayout from './components/ActualLayout'
 import MovieList from './components/MovieList'
-import { SearchBar } from './components/SearchBar'
+import { SearchResult } from './components/SearchBar'
 import {
   groupByGenre,
   newAndNotable,
@@ -47,13 +48,15 @@ export default async function Home() {
   ))
 
   return (
-    <SearchBar allMovies={movieList}>
-      <MovieListWithHeader
-        header='New and Notable'
-        movies={newAndNotable(movieList)}
-      />
+    <ActualLayout showSearch>
+      <SearchResult allMovies={movieList}>
+        <MovieListWithHeader
+          header='New and Notable'
+          movies={newAndNotable(movieList)}
+        />
 
-      <>{topFiveMarkup}</>
-    </SearchBar>
+        <>{topFiveMarkup}</>
+      </SearchResult>
+    </ActualLayout>
   )
 }

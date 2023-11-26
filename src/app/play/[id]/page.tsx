@@ -1,3 +1,4 @@
+import ActualLayout from '@/app/components/ActualLayout'
 import { isCacheableImage } from '@/app/utility'
 import { Movie } from '@/lib/types'
 import { fetchMediaInfo, fetchMovies } from '@/server/api'
@@ -70,27 +71,29 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
   )
 
   return (
-    <div className='grid grid-flow-row'>
-      <VideoPlayer
-        baseUrl={client.defaults.baseURL!}
-        video={content}
-        frameSize={[vstream.coded_width!, vstream.coded_height!]}
-      />
-      <section className='mx-auto grid max-w-6xl items-start gap-6 px-4 py-6'>
-        <div className='grid items-start gap-4 md:gap-10'>
-          <div className='flex items-center space-x-4'>
-            {image}
-            <div className='flex flex-col items-start space-y-1'>
-              <h2 className='text-3xl font-bold'>{content.title}</h2>
-              <h3 className='text-xl italic'>{information}</h3>
+    <ActualLayout>
+      <div className='grid grid-flow-row'>
+        <VideoPlayer
+          baseUrl={client.defaults.baseURL!}
+          video={content}
+          frameSize={[vstream.coded_width!, vstream.coded_height!]}
+        />
+        <section className='mx-auto grid max-w-6xl items-start gap-6 px-4 py-6'>
+          <div className='grid items-start gap-4 md:gap-10'>
+            <div className='flex items-center space-x-4'>
+              {image}
+              <div className='flex flex-col items-start space-y-1'>
+                <h2 className='text-3xl font-bold'>{content.title}</h2>
+                <h3 className='text-xl italic'>{information}</h3>
+              </div>
             </div>
-          </div>
 
-          <p className='text-lg leading-relaxed'>
-            {content.full_summary ?? content.summary}
-          </p>
-        </div>
-      </section>
-    </div>
+            <p className='text-lg leading-relaxed'>
+              {content.full_summary ?? content.summary}
+            </p>
+          </div>
+        </section>
+      </div>
+    </ActualLayout>
   )
 }

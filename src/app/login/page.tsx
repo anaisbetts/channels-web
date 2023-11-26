@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { e } from '@/lib/logger-client'
+import ActualLayout from '../components/ActualLayout'
 
 export default function Login() {
   const router = useRouter()
@@ -35,28 +36,30 @@ export default function Login() {
   }, [reset, err])
 
   return (
-    <dialog open>
-      <h2>Set a Channels Server</h2>
-      <p>Configure which server to use with Channels.</p>
+    <ActualLayout>
+      <dialog open>
+        <h2>Set a Channels Server</h2>
+        <p>Configure which server to use with Channels.</p>
 
-      <form onSubmit={invoke}>
-        <label htmlFor='server'>Server</label>
-        <input
-          type='text'
-          id='server'
-          name='server'
-          onChange={(e) => setServer(e.target.value)}
-        />
+        <form onSubmit={invoke}>
+          <label htmlFor='server'>Server</label>
+          <input
+            type='text'
+            id='server'
+            name='server'
+            onChange={(e) => setServer(e.target.value)}
+          />
 
-        <button
-          type='submit'
-          disabled={!result.isOk() || server == null || server.length < 5}
-        >
-          Set Server
-        </button>
+          <button
+            type='submit'
+            disabled={!result.isOk() || server == null || server.length < 5}
+          >
+            Set Server
+          </button>
 
-        {err && <p>Oye, its not good!</p>}
-      </form>
-    </dialog>
+          {err && <p>Oye, its not good!</p>}
+        </form>
+      </dialog>
+    </ActualLayout>
   )
 }
