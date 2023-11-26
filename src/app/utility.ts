@@ -1,6 +1,6 @@
 // NB: This needs to be synced with next.config.js
 const cachedHosts: Record<string, boolean> = {
-  'https://image.tmbd.org': true,
+  'https://image.tmdb.org': true,
   'http://fanc.tmsimg.com': true,
   'https://tmsimg.fancybits.co': true,
 }
