@@ -5,11 +5,14 @@ import { Movie } from '@/lib/types'
 import { matchSorter } from 'match-sorter'
 import { useState } from 'react'
 import MovieList from './MovieList'
+import { groupByGenre } from './list-generation'
 
 export interface SearchBarProps {
   allMovies: Movie[]
   children: JSX.Element[]
 }
+
+const wnd: any = window
 
 export function SearchBar({ allMovies, children }: SearchBarProps) {
   const [search, setSearch] = useState('')
@@ -23,6 +26,9 @@ export function SearchBar({ allMovies, children }: SearchBarProps) {
     i('Search results', result)
     innerContent = <MovieList movies={result} />
   }
+
+  wnd.movies = allMovies
+  wnd.genres = groupByGenre(allMovies)
 
   return (
     <section>
