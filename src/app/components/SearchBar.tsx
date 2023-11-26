@@ -1,47 +1,62 @@
 'use client'
 
+import { cx } from '@/lib/actions/utility'
 import { i } from '@/lib/logger-client'
 import { Movie } from '@/lib/types'
 import { matchSorter } from 'match-sorter'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { SearchContext } from './ActualLayout'
 import MovieList from './MovieList'
-import { groupByGenre } from './list-generation'
 
 export interface SearchBarProps {
+  className?: string
+  onChange?: (query: string) => void
+}
+
+export interface SearchResultProps {
   allMovies: Movie[]
+  query?: string
   children: JSX.Element[]
 }
 
-const wnd: any = window
-
-export function SearchBar({ allMovies, children }: SearchBarProps) {
+export function SearchBar({ className, onChange }: SearchBarProps) {
   const [search, setSearch] = useState('')
+  const c = cx(
+    className,
+    'mx-8 my-4 max-w-xl rounded-2xl border-2 border-gray-300 text-gray-900',
+  )
 
-  const isEmpty = (search ?? '').length < 2
+  return (
+    <input
+      className={c}
+      type='search'
+      placeholder='Search'
+      value={search}
+      onChange={(e) => {
+        onChange?.(e.target.value)
+        setSearch(e.target.value)
+      }}
+    />
+  )
+}
+
+export function SearchResult({
+  allMovies,
+  query,
+  children,
+}: SearchResultProps) {
+  const sp = useContext(SearchContext)
+
+  const q = query ?? sp ?? ''
+  const isEmpty = q.length < 4
   let innerContent = isEmpty ? children : <></>
 
   if (!isEmpty) {
-    const result = matchSorter(allMovies, search, { keys: ['title'] })
+    const result = matchSorter(allMovies, q, { keys: ['title'] })
 
     i('Search results', result)
     innerContent = <MovieList movies={result} />
   }
 
-  //wnd.movies = allMovies
-  //wnd.genres = groupByGenre(allMovies)
-
-  return (
-    <>
-      <div className='flex items-center justify-center'>
-        <input
-          className='my-4 w-1/2 rounded-2xl border-2 border-gray-300 px-2 text-gray-900'
-          type='search'
-          placeholder='Search'
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
-      {innerContent}
-    </>
-  )
+  return <>{innerContent}</>
 }
