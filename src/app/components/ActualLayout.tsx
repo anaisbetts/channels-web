@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { createContext, useState } from 'react'
 import { SearchBar } from './SearchBar'
@@ -21,7 +22,16 @@ export default function ActualLayout({
     <SearchContext.Provider value={search}>
       <nav className='flex flex-col items-center bg-gradient-to-r from-purple-700 to-blue-700 sm:flex-row'>
         <Link href='/'>
-          <h2 className='p-4 text-2xl font-bold'>Channels</h2>
+          <span className='flex flex-row items-center'>
+            <Image
+              className='mx-2'
+              src='/logo-trans.png'
+              alt='Channels'
+              width={35}
+              height={25}
+            />
+            <h2 className='pt-1 text-2xl font-bold'>Channels</h2>
+          </span>
         </Link>
 
         {showSearch && (
