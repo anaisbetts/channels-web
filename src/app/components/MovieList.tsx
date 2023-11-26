@@ -50,7 +50,7 @@ export function MovieTile({ movie }: { movie: Movie }) {
 
 export default function MovieList({ movies }: MovieListProps) {
   return (
-    <div className='grid w-screen grid-flow-col-dense grid-rows-2 gap-4 overflow-x-auto px-8'>
+    <div className='grid grid-flow-col-dense grid-rows-2 gap-4 overflow-x-auto px-8'>
       {movies.map((movie) => (
         <MovieTile movie={movie} key={movie.id} />
       ))}

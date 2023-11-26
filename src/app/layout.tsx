@@ -19,7 +19,9 @@ export default function RootLayout({
 }) {
   const bc = cx(
     sourceSans.className,
-    'v-screen h-screen bg-gradient-to-r from-purple-900 to-blue-900 text-white',
+    'bg-gradient-to-r from-purple-900 to-blue-900 text-white',
+    'fixed inset-0',
+    'grid grid-rows-[auto,1fr,auto]',
   )
 
   return (
@@ -31,7 +33,9 @@ export default function RootLayout({
           </Link>
         </nav>
 
-        <main className='py-2'>{children}</main>
+        <main className='overflow-y-auto py-2'>{children}</main>
+
+        <footer className='h-6 bg-gradient-to-r from-purple-700 to-blue-700'></footer>
       </body>
     </html>
   )

@@ -19,19 +19,17 @@ export default async function Home() {
   const movieList = await fetchMovies()
 
   return (
-    <section className='prose'>
-      <SearchBar allMovies={movieList}>
-        <h2 className='px-8 text-5xl'>Movies</h2>
-        <MovieList movies={movieList.slice(0, 50)} />
+    <SearchBar allMovies={movieList}>
+      <h2 className='px-8 py-4 text-5xl'>Movies</h2>
+      <MovieList movies={movieList.slice(0, 50)} />
 
-        <h2 className='px-8 text-5xl'>A different List</h2>
-        <MovieList movies={movieList.slice(51, 100)} />
+      <h2 className='px-8 py-4 text-5xl'>A different List</h2>
+      <MovieList movies={movieList.slice(51, 100)} />
 
-        <h2 className='px-8 text-5xl'>A Third List</h2>
-        <MovieList
-          movies={movieList.filter((x) => x.title.indexOf('atrix') > 0)}
-        />
-      </SearchBar>
-    </section>
+      <h2 className='px-8 py-4 text-5xl'>A Third List</h2>
+      <MovieList
+        movies={movieList.filter((x) => x.title.indexOf('atrix') > 0)}
+      />
+    </SearchBar>
   )
 }
