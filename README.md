@@ -23,7 +23,7 @@ channels-web:
     - ./channels:/data
 ```
 
-The mounted directory will need to be writable by the nonroot user (uid: 65532, gid: 65532), for example by calling `sudo chown 65532:65532 /data`. Alternatively, you can run channels-web as root using `docker run -u root`.
+The mounted directory will need to be writable by the nonroot user (uid: 65532, gid: 65532), for example by calling `sudo chown 65532:65532 ./channels` from the above Compose section. Alternatively, you can run channels-web as root using `docker run -u root`.
 
 When you get a prompt for entering your Channels server, the best answer is:
 
