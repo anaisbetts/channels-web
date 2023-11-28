@@ -35,9 +35,9 @@ export default function ActualLayout({
         </Link>
 
         {showSearch && (
-          <div className='flex flex-grow'>
+          <search className='flex flex-grow'>
             <SearchBar className='flex-grow' onChange={(e) => setSearch(e)} />
-          </div>
+          </search>
         )}
       </nav>
 
