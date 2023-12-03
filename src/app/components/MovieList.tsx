@@ -1,16 +1,17 @@
 import { cx } from '@/lib/actions/utility'
 import { i } from '@/lib/logger-client'
-import { Movie } from '@/lib/types'
+import { Media, getTitleForMedia } from '@/lib/types'
 import Image from 'next/image'
 import Link from 'next/link'
 import { isCacheableImage } from '../utility'
-import { defaultMovieSort } from './list-generation'
 
-export type MovieListProps = {
-  movies: Movie[]
+export interface MediaTileProps {
+  id: string
+  imageUrl: string
+  title: string
 }
 
-export function MovieTile({ movie }: { movie: Movie }) {
+export function MediaTile({ id, imageUrl, title }: MediaTileProps) {
   var c = cx(
     'flex items-center justify-center',
     'group relative transform transition-transform hover:scale-110',
@@ -18,19 +19,19 @@ export function MovieTile({ movie }: { movie: Movie }) {
     'drop-shadow-xl hover:drop-shadow-2xl',
   )
 
-  const href = `/play/${movie.id}`
+  const href = `/play/${id}`
 
-  const cacheable = isCacheableImage(movie.image_url)
+  const cacheable = isCacheableImage(imageUrl)
   if (!cacheable) {
-    i(`Can't cache! ${new URL(movie.image_url).origin}`)
+    i(`Can't cache! ${new URL(imageUrl).origin}`)
   }
 
   const image = cacheable ? (
     <Image
       className={c}
       style={{ maxWidth: '150px' }}
-      src={movie.image_url}
-      alt={movie.title}
+      src={imageUrl}
+      alt={title}
       width={200}
       height={300}
     />
@@ -39,8 +40,8 @@ export function MovieTile({ movie }: { movie: Movie }) {
     <img
       className={c}
       style={{ maxWidth: '150px' }}
-      src={movie.image_url}
-      alt={movie.title}
+      src={imageUrl}
+      alt={title}
       decoding='async'
       loading='lazy'
       width={200}
@@ -49,17 +50,26 @@ export function MovieTile({ movie }: { movie: Movie }) {
   )
 
   return (
-    <Link href={href} aria-label={movie.title}>
+    <Link href={href} aria-label={title}>
       {image}
     </Link>
   )
 }
 
-export default function MovieList({ movies }: MovieListProps) {
+export interface MediaListProps {
+  movies: Media[]
+}
+
+export default function MediaList({ movies }: MediaListProps) {
   return (
     <div className='grid grid-flow-col-dense grid-rows-2 gap-4 overflow-x-auto p-4'>
-      {defaultMovieSort(movies).map((movie) => (
-        <MovieTile movie={movie} key={movie.id} />
+      {movies.map((movie) => (
+        <MediaTile
+          id={movie.id}
+          imageUrl={movie.image_url}
+          title={getTitleForMedia(movie)}
+          key={movie.id}
+        />
       ))}
     </div>
   )

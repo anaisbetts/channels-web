@@ -1,4 +1,4 @@
-import { Movie } from '@/lib/types'
+import { Media, Movie, getTitleForMedia } from '@/lib/types'
 import orderBy from 'lodash/fp/orderBy'
 
 export function groupByGenre(movies: Movie[]): Record<string, Movie[]> {
@@ -28,7 +28,10 @@ export function sortGenresByPopularity(
     .slice(0, count)
 }
 
-export function newAndNotableForTime(movies: Movie[], since: number): Movie[] {
+export function newAndNotableForTime<T extends Media>(
+  movies: T[],
+  since: number,
+): T[] {
   const recentlyWatched = movies
     .filter((x) => (x.last_watched_at ?? 0) >= since)
     .sort((a, b) => (b.last_watched_at ?? 0) - (a.last_watched_at ?? 0))
@@ -43,7 +46,7 @@ export function newAndNotableForTime(movies: Movie[], since: number): Movie[] {
 }
 
 const twoWeeksOfTime = 1000 * 60 * 60 * 24 * 14
-export function newAndNotable(movies: Movie[]): Movie[] {
+export function newAndNotable<T extends Media>(movies: T[]): T[] {
   const ret = newAndNotableForTime(movies, Date.now() - twoWeeksOfTime)
 
   // If we don't get enough results for two weeks, scale it up to 4
@@ -51,16 +54,16 @@ export function newAndNotable(movies: Movie[]): Movie[] {
   return newAndNotableForTime(movies, Date.now() - twoWeeksOfTime * 2)
 }
 
-export function defaultMovieSort(movies: Movie[]): Movie[] {
+export function defaultMediaSort<T extends Media>(movies: T[]): T[] {
   const newMovies = newAndNotable(movies)
   const lookup = newMovies.reduce(
     (acc, movie) => {
-      acc[movie.title] = true
+      acc[getTitleForMedia(movie)] = true
       return acc
     },
     {} as Record<string, boolean>,
   )
 
-  const restMovies = movies.filter((x) => !lookup[x.title])
+  const restMovies = movies.filter((x) => !lookup[getTitleForMedia(x)])
   return [...newMovies, ...orderBy(['title'], ['asc'], restMovies)]
 }
