@@ -1,5 +1,5 @@
 import { Media } from '@/lib/types'
-import { fetchMovies, status } from '@/server/api'
+import { fetchMovies, fetchTVSeries, status } from '@/server/api'
 import { w } from '@/server/logger'
 import { redirect } from 'next/navigation'
 import ActualLayout from './components/ActualLayout'
@@ -38,7 +38,10 @@ export default async function Home() {
     redirect('/login')
   }
 
-  const movieList = await fetchMovies()
+  const [movieList, showList] = await Promise.all([
+    fetchMovies(),
+    fetchTVSeries(),
+  ])
 
   // Generate some interesting lists
   const genres = groupByGenre(movieList)
@@ -57,7 +60,7 @@ export default async function Home() {
       <SearchResult allMovies={movieList}>
         <MediaListWithHeader
           header='New and Notable'
-          media={newAndNotable(movieList)}
+          media={newAndNotable([...movieList, ...showList])}
         />
 
         <>{topFiveMarkup}</>
