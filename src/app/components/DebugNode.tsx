@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect } from 'react'
-import { MovieListProps } from './MovieList'
+import { MediaListProps } from './MediaList'
 
-export function DebugNode({ movies }: MovieListProps) {
+export function DebugNode({ media: movies }: MediaListProps) {
   useEffect(() => {
     const wnd = window as any
     wnd.movies = movies

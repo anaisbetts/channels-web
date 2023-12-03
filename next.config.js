@@ -6,6 +6,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'image.tmdb.org' },
       { protocol: 'http', hostname: 'fanc.tmsimg.com' },
       { protocol: 'https', hostname: 'tmsimg.fancybits.co' },
+      { protocol: 'http', hostname: 'tmsimg.fancybits.co' },
     ],
   },
   swcMinify: true,

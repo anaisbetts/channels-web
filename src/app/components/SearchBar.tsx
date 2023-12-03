@@ -6,7 +6,7 @@ import { Movie } from '@/lib/types'
 import { matchSorter } from 'match-sorter'
 import { useContext, useState } from 'react'
 import { SearchContext } from './ActualLayout'
-import MovieList from './MovieList'
+import MediaList from './MediaList'
 
 export interface SearchBarProps {
   className?: string
@@ -55,7 +55,7 @@ export function SearchResult({
     const result = matchSorter(allMovies, q, { keys: ['title'] })
 
     i('Search results', result)
-    innerContent = <MovieList movies={result} />
+    innerContent = <MediaList media={result} />
   }
 
   return <>{innerContent}</>

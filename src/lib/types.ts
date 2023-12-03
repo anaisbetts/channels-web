@@ -175,3 +175,27 @@ export type Logger = {
   w: (...args: any[]) => void
   e: (...args: any[]) => void
 }
+
+export function isMovie(media: Media): media is Movie {
+  return !isEpisode(media) && !isTVShow(media)
+}
+
+export function isEpisode(media: Media): media is Episode {
+  return 'episode_title' in media
+}
+
+export function isTVShow(media: Media): media is TVShow {
+  return 'name' in media
+}
+
+export function getTitleForMedia(media: Media): string {
+  if (isTVShow(media)) {
+    return (media as TVShow).name
+  }
+
+  if (isEpisode(media)) {
+    return (media as Episode).title
+  }
+
+  return (media as Movie).title
+}

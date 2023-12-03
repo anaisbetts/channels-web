@@ -1,11 +1,12 @@
-import { Movie } from '@/lib/types'
-import { fetchMovies, status } from '@/server/api'
+import { Media } from '@/lib/types'
+import { fetchMovies, fetchTVSeries, status } from '@/server/api'
 import { w } from '@/server/logger'
 import { redirect } from 'next/navigation'
 import ActualLayout from './components/ActualLayout'
-import MovieList from './components/MovieList'
+import MediaList from './components/MediaList'
 import { SearchResult } from './components/SearchBar'
 import {
+  defaultMediaSort,
   groupByGenre,
   newAndNotable,
   sortGenresByPopularity,
@@ -13,16 +14,16 @@ import {
 
 export const revalidate = 10 // seconds
 
-interface MovieListWithHeaderProps {
+interface MediaListWithHeaderProps {
   header: string
-  movies: Movie[]
+  media: Media[]
 }
 
-function MovieListWithHeader({ header, movies }: MovieListWithHeaderProps) {
+function MediaListWithHeader({ header, media }: MediaListWithHeaderProps) {
   return (
     <section>
       <h2 className='px-8 pb-4 pt-12 text-5xl font-bold'>{header}</h2>
-      <MovieList movies={movies} />
+      <MediaList media={media} />
     </section>
   )
 }
@@ -37,22 +38,29 @@ export default async function Home() {
     redirect('/login')
   }
 
-  const movieList = await fetchMovies()
+  const [movieList, showList] = await Promise.all([
+    fetchMovies(),
+    fetchTVSeries(),
+  ])
 
   // Generate some interesting lists
-  const genres = groupByGenre(movieList)
+  const genres = groupByGenre([...movieList, ...showList])
   const topFive = sortGenresByPopularity(genres, 3)
 
   const topFiveMarkup = topFive.map(([genre, movies]) => (
-    <MovieListWithHeader key={genre} header={genre} movies={movies} />
+    <MediaListWithHeader
+      key={genre}
+      header={genre}
+      media={defaultMediaSort(movies)}
+    />
   ))
 
   return (
     <ActualLayout showSearch>
       <SearchResult allMovies={movieList}>
-        <MovieListWithHeader
+        <MediaListWithHeader
           header='New and Notable'
-          movies={newAndNotable(movieList)}
+          media={newAndNotable([...movieList, ...showList])}
         />
 
         <>{topFiveMarkup}</>
