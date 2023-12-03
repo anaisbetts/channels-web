@@ -23,7 +23,7 @@ function MediaListWithHeader({ header, media }: MediaListWithHeaderProps) {
   return (
     <section>
       <h2 className='px-8 pb-4 pt-12 text-5xl font-bold'>{header}</h2>
-      <MediaList movies={media} />
+      <MediaList media={media} />
     </section>
   )
 }

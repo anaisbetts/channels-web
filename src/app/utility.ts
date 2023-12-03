@@ -3,6 +3,11 @@ const cachedHosts: Record<string, boolean> = {
   'https://image.tmdb.org': true,
   'http://fanc.tmsimg.com': true,
   'https://tmsimg.fancybits.co': true,
+  'http://tmsimg.fancybits.co': true,
+}
+
+const shouldStrip: Record<string, boolean> = {
+  'https://tmsimg.fancybits.co': true,
 }
 
 // NB: Next.js's Image element that does all of our great image
@@ -10,10 +15,15 @@ const cachedHosts: Record<string, boolean> = {
 // one of the image sources that Channels can return is a URL to
 // itself, which of course will be dynamic
 export function isCacheableImage(url: string) {
-  const origin = new URL(url).origin
+  const u = new URL(url)
+  let finalUrl = url
 
-  const ret = cachedHosts[origin] === true
-  return ret
+  if (shouldStrip[u.origin]) {
+    finalUrl = `${u.origin}${u.pathname}`
+  }
+
+  const ret = cachedHosts[u.origin] === true
+  return { shouldCache: ret, url: finalUrl }
 }
 
 export const isDev = process.env.NODE_ENV !== 'production'

@@ -55,7 +55,7 @@ export function SearchResult({
     const result = matchSorter(allMovies, q, { keys: ['title'] })
 
     i('Search results', result)
-    innerContent = <MediaList movies={result} />
+    innerContent = <MediaList media={result} />
   }
 
   return <>{innerContent}</>
