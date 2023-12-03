@@ -62,7 +62,7 @@ export interface MediaListProps {
 
 export default function MediaList({ movies }: MediaListProps) {
   return (
-    <div className='grid grid-flow-col-dense grid-rows-2 gap-4 overflow-x-auto p-4'>
+    <div className='grid grid-flow-col-dense grid-rows-2 items-center gap-4 overflow-x-auto p-4'>
       {movies.map((movie) => (
         <MediaTile
           id={movie.id}
