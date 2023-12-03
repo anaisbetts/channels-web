@@ -3,7 +3,7 @@ import { fetchMovies, status } from '@/server/api'
 import { w } from '@/server/logger'
 import { redirect } from 'next/navigation'
 import ActualLayout from './components/ActualLayout'
-import MediaList from './components/MovieList'
+import MediaList from './components/MediaList'
 import { SearchResult } from './components/SearchBar'
 import {
   defaultMediaSort,

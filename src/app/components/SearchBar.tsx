@@ -6,7 +6,7 @@ import { Movie } from '@/lib/types'
 import { matchSorter } from 'match-sorter'
 import { useContext, useState } from 'react'
 import { SearchContext } from './ActualLayout'
-import MediaList from './MovieList'
+import MediaList from './MediaList'
 
 export interface SearchBarProps {
   className?: string

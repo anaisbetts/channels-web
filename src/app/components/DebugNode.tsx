@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { MediaListProps } from './MovieList'
+import { MediaListProps } from './MediaList'
 
 export function DebugNode({ movies }: MediaListProps) {
   useEffect(() => {
