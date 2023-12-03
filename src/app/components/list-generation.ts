@@ -1,7 +1,11 @@
-import { Media, Movie, getTitleForMedia } from '@/lib/types'
+import { Media, Movie, TVShow, getTitleForMedia } from '@/lib/types'
 import orderBy from 'lodash/fp/orderBy'
 
-export function groupByGenre(movies: Movie[]): Record<string, Movie[]> {
+type HasGenres = Movie | TVShow
+
+export function groupByGenre<T extends HasGenres>(
+  movies: T[],
+): Record<string, T[]> {
   return movies.reduce(
     (acc, movie) => {
       if (!movie.genres) {
@@ -15,12 +19,12 @@ export function groupByGenre(movies: Movie[]): Record<string, Movie[]> {
 
       return acc
     },
-    {} as Record<string, Movie[]>,
+    {} as Record<string, T[]>,
   )
 }
 
-export function sortGenresByPopularity(
-  genres: Record<string, Movie[]>,
+export function sortGenresByPopularity<T extends HasGenres>(
+  genres: Record<string, T[]>,
   count: number,
 ) {
   return Object.entries(genres)
@@ -65,5 +69,8 @@ export function defaultMediaSort<T extends Media>(movies: T[]): T[] {
   )
 
   const restMovies = movies.filter((x) => !lookup[getTitleForMedia(x)])
-  return [...newMovies, ...orderBy(['title'], ['asc'], restMovies)]
+  return [
+    ...newMovies,
+    ...orderBy([(x) => getTitleForMedia(x)], ['asc'], restMovies),
+  ]
 }
