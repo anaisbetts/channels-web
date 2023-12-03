@@ -44,7 +44,7 @@ export default async function Home() {
   ])
 
   // Generate some interesting lists
-  const genres = groupByGenre(movieList)
+  const genres = groupByGenre([...movieList, ...showList])
   const topFive = sortGenresByPopularity(genres, 3)
 
   const topFiveMarkup = topFive.map(([genre, movies]) => (
