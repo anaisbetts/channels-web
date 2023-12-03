@@ -1,4 +1,4 @@
-import { Movie } from '@/lib/types'
+import { Media } from '@/lib/types'
 import { fetchMovies, status } from '@/server/api'
 import { w } from '@/server/logger'
 import { redirect } from 'next/navigation'
@@ -16,14 +16,14 @@ export const revalidate = 10 // seconds
 
 interface MediaListWithHeaderProps {
   header: string
-  movies: Movie[]
+  media: Media[]
 }
 
-function MediaListWithHeader({ header, movies }: MediaListWithHeaderProps) {
+function MediaListWithHeader({ header, media }: MediaListWithHeaderProps) {
   return (
     <section>
       <h2 className='px-8 pb-4 pt-12 text-5xl font-bold'>{header}</h2>
-      <MediaList movies={movies} />
+      <MediaList movies={media} />
     </section>
   )
 }
@@ -48,7 +48,7 @@ export default async function Home() {
     <MediaListWithHeader
       key={genre}
       header={genre}
-      movies={defaultMediaSort(movies)}
+      media={defaultMediaSort(movies)}
     />
   ))
 
@@ -57,7 +57,7 @@ export default async function Home() {
       <SearchResult allMovies={movieList}>
         <MediaListWithHeader
           header='New and Notable'
-          movies={newAndNotable(movieList)}
+          media={newAndNotable(movieList)}
         />
 
         <>{topFiveMarkup}</>
