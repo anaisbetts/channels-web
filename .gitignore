@@ -34,3 +34,5 @@ next-env.d.ts
 
 .turbo
 .node-persist
+.storage.json
+logs
