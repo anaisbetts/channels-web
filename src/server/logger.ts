@@ -6,6 +6,7 @@ import path from 'path'
 import * as winston from 'winston'
 import 'winston-daily-rotate-file'
 
+import { isDev } from '@/app/utility'
 import { Logger } from '@/lib/types'
 import { locateDataDir } from './data-dir'
 
@@ -32,6 +33,20 @@ function locateLogDir() {
   return (logDir = tgt)
 }
 
+const prodLoggers = isDev
+  ? []
+  : [
+      new winston.transports.DailyRotateFile({
+        filename: path.join(locateLogDir(), 'channels-web-%DATE%.log'),
+        datePattern: 'YYYY-MM-DD',
+        zippedArchive: true,
+        maxSize: '20m',
+        maxFiles: '2d',
+        createSymlink: true,
+        symlinkName: 'channels-web.log',
+      }),
+    ]
+
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL?.toLowerCase() || 'debug',
   format: winston.format.combine(
@@ -48,15 +63,7 @@ const logger = winston.createLogger({
         hformat,
       ),
     }),
-    new winston.transports.DailyRotateFile({
-      filename: path.join(locateLogDir(), 'channels-web-%DATE%.log'),
-      datePattern: 'YYYY-MM-DD',
-      zippedArchive: true,
-      maxSize: '20m',
-      maxFiles: '2d',
-      createSymlink: true,
-      symlinkName: 'channels-web.log',
-    }),
+    ...prodLoggers,
   ],
 })
 
