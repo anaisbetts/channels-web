@@ -8,6 +8,12 @@ import { isDev } from '@/app/utility'
 import fs from 'fs'
 import path from 'path'
 
+function appDevRoot() {
+  // NB: Next.js does crazy things to dirname, we need to use a different way
+  // to find the app root
+  return path.dirname(process.env.npm_package_json!)
+}
+
 let dataDir: string
 export function locateDataDir() {
   if (dataDir) return dataDir
@@ -15,7 +21,7 @@ export function locateDataDir() {
   // NB: If we don't do this, we will end up writing to a read-only part
   // inside the Docker image
   const storagePath = process.env.DATA_DIR ?? path.join('.next')
-  const devStoragePath = path.join(__dirname, '..', '..')
+  const devStoragePath = appDevRoot()
 
   let sp = devStoragePath
   try {

@@ -29,11 +29,13 @@ function log<T, D>(res: AxiosResponse<T, D>): AxiosResponse<T, D> {
 }
 
 export async function setBaseUrl(url: string) {
+  i(`Setting Channels server to ${url}`)
   setClient(url)
 
   try {
     await status()
   } catch (e) {
+    w(`Failed to find Channels server at ${url}: ${e}`)
     setClient(null)
     throw new Error('Failed to find Channels server')
   }
