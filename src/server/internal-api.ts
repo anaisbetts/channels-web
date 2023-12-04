@@ -1,32 +1,22 @@
 import 'server-only'
 
 import { Axios } from 'axios'
-import { mkdirp } from 'mkdirp'
-import storage from 'node-persist'
 import path from 'path'
+import { LocalStorage } from './persist'
 
 import { locateDataDir } from './data-dir'
-import { i, w } from './logger'
+import { i } from './logger'
 
-let init: Promise<storage.InitOptions>
-function initializeStorage() {
-  if (init) return init
+const localStorage = new LocalStorage(
+  path.join(locateDataDir(), '.storage.json'),
+)
 
-  const tgt = path.join(locateDataDir(), 'storage')
-  mkdirp.sync(tgt)
-
-  w(`Writing storage to ${tgt}`)
-  return (init = storage.init({ dir: tgt }))
+export function setClient(baseUrl: string | null) {
+  localStorage.set('baseUrl', baseUrl)
 }
 
-export async function setClient(baseUrl: string | null) {
-  await initializeStorage()
-  await storage.setItem('baseUrl', baseUrl)
-}
-
-export async function ensureClient(): Promise<Axios> {
-  await initializeStorage()
-  const url = await storage.getItem('baseUrl')
+export function ensureClient(): Axios {
+  const url = localStorage.get('baseUrl')
 
   if (!url) {
     i('No Channels Server set, cannot create client')

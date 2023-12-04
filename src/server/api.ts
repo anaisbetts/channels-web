@@ -29,12 +29,12 @@ function log<T, D>(res: AxiosResponse<T, D>): AxiosResponse<T, D> {
 }
 
 export async function setBaseUrl(url: string) {
-  await setClient(url)
+  setClient(url)
 
   try {
     await status()
   } catch (e) {
-    await setClient(null)
+    setClient(null)
     throw new Error('Failed to find Channels server')
   }
 
@@ -42,7 +42,7 @@ export async function setBaseUrl(url: string) {
 }
 
 export async function status() {
-  let client = await ensureClient()
+  let client = ensureClient()
 
   // NB: We must use fetch here or else this will be cached incorrectly
   const { signal } = new AbortController()
@@ -70,7 +70,7 @@ function getFiltersQueryString(options: FetchOpts = {}) {
 
 const yesIAmThatOldDontJudgeMe = /CD[12]/i
 export async function fetchMovies(options: FetchOpts = {}): Promise<Movie[]> {
-  let client = await ensureClient()
+  let client = ensureClient()
 
   const ret = log(
     await client.get<Movie[]>(
@@ -92,7 +92,7 @@ export async function fetchMovies(options: FetchOpts = {}): Promise<Movie[]> {
 export async function fetchTVSeries(
   options: FetchOpts = {},
 ): Promise<TVShow[]> {
-  let client = await ensureClient()
+  let client = ensureClient()
 
   const ret = log(
     await client.get<TVShow[]>(
@@ -106,7 +106,7 @@ export async function fetchAllEpisodes(
   show?: TVShow,
   options: FetchOpts = {},
 ): Promise<Media[]> {
-  let client = await ensureClient()
+  let client = ensureClient()
 
   const basePath = show
     ? `/api/v1/shows/${show.id}/episodes`
@@ -119,7 +119,7 @@ export async function fetchAllEpisodes(
 }
 
 export async function fetchMediaInfo(media: PlayableMedia): Promise<MediaInfo> {
-  let client = await ensureClient()
+  let client = ensureClient()
 
   const ret = log(
     await client.get<MediaInfo>(`/dvr/files/${media.id}/mediainfo.json`),
