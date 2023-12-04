@@ -20,8 +20,9 @@ export function locateDataDir() {
 
   // NB: If we don't do this, we will end up writing to a read-only part
   // inside the Docker image
-  const storagePath = process.env.DATA_DIR ?? path.join('.next')
-  const devStoragePath = appDevRoot()
+  const storagePath =
+    process.env.DATA_DIR ?? path.join(process.env.cwd!, '.next')
+  const devStoragePath = isDev ? appDevRoot() : storagePath
 
   let sp = devStoragePath
   try {
