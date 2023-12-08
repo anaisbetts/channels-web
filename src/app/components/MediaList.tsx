@@ -1,6 +1,11 @@
 import { cx } from '@/lib/actions/utility'
 import { i } from '@/lib/logger-client'
-import { Media, getTitleForMedia, isMovie } from '@/lib/types'
+import {
+  Media,
+  getDescriptionForMedia,
+  getTitleForMedia,
+  isMovie,
+} from '@/lib/types'
 import Image from 'next/image'
 import Link from 'next/link'
 import { isCacheableImage } from '../utility'
@@ -9,19 +14,27 @@ export interface MediaTileProps {
   id: string
   imageUrl: string
   title: string
+  description: string
   isVertical: boolean
 }
 
 const verticalAspect = 2 / 3
 const horizontalAspect = 4 / 3
 
-export function MediaTile({ id, imageUrl, title, isVertical }: MediaTileProps) {
+export function MediaTile({
+  id,
+  imageUrl,
+  title,
+  description,
+  isVertical,
+}: MediaTileProps) {
   var c = cx(
     'flex items-center justify-center',
     'group relative transform transition-transform hover:scale-110',
     'rounded-lg object-cover group-hover:opacity-75 transition-opacity',
     'drop-shadow-xl hover:drop-shadow-2xl',
     'mx-8 my-2',
+    'row-span-2 col-1',
   )
 
   const href = `/play/${id}`
@@ -63,7 +76,11 @@ export function MediaTile({ id, imageUrl, title, isVertical }: MediaTileProps) {
 
   return (
     <Link href={href} aria-label={title}>
-      {image}
+      <div className='max-h-lg grid max-w-lg grid-cols-[200px,1fr] grid-rows-[1fr,2fr] @container'>
+        {image}
+        <h2 className='hidden text-4xl @sm:inline'>{title}</h2>
+        <p className='hidden @sm:inline'>{description}</p>
+      </div>
     </Link>
   )
 }
@@ -80,6 +97,7 @@ export default function MediaList({ media }: MediaListProps) {
           id={item.id}
           imageUrl={item.image_url}
           title={getTitleForMedia(item)}
+          description={getDescriptionForMedia(item)}
           key={item.id}
           isVertical={isMovie(item)}
         />
