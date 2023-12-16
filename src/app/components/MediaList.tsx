@@ -53,38 +53,39 @@ export function MediaTile({
     ? { aspectRatio: '2/3' }
     : { aspectRatio: '4/3' }
 
-  const image =
-    shouldCache && false ? (
-      <Image
-        className={c}
-        style={aspectRatio}
-        src={url}
-        alt={title}
-        width={width}
-        height={height}
-      />
-    ) : (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        className={c}
-        style={aspectRatio}
-        src={url}
-        alt={title}
-        decoding='async'
-        loading='lazy'
-        width={width}
-        height={height}
-      />
-    )
+  const image = shouldCache ? (
+    <Image
+      className={c}
+      style={aspectRatio}
+      src={url}
+      alt={title}
+      width={width}
+      height={height}
+    />
+  ) : (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      className={c}
+      style={aspectRatio}
+      src={url}
+      alt={title}
+      decoding='async'
+      loading='lazy'
+      width={width}
+      height={height}
+    />
+  )
 
   return (
     <Link href={href} aria-label={title}>
-      <div className='grid h-72 grid-cols-[auto,1fr] grid-rows-[1fr,2fr] @container'>
+      <div className='grid h-72 max-w-[600px] grid-cols-[auto,1fr] grid-rows-[1fr,2fr] @container'>
         {image}
         <h2 className='hidden text-4xl text-white @sm:mx-4 @sm:inline'>
           {title}
         </h2>
-        <p className='hidden text-white @sm:mx-4 @sm:inline'>{description}</p>
+        <p className='hidden text-white @sm:mx-4 @sm:my-4 @sm:inline'>
+          {description}
+        </p>
       </div>
     </Link>
   )
