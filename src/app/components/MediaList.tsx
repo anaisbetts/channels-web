@@ -32,9 +32,7 @@ export function MediaTile({
     'group relative transform transition-transform hover:scale-110',
     'rounded-lg object-cover group-hover:opacity-75 transition-opacity',
     'drop-shadow-xl hover:drop-shadow-2xl',
-    'mx-8 my-2',
     'row-span-2 col-1',
-    isVertical ? 'aspect-w-2 aspect-h-3' : 'aspect-w-4 aspect-h-3',
   )
 
   const href = `/play/${id}`
@@ -50,28 +48,42 @@ export function MediaTile({
 
   const width = isVertical ? 200 : 300
   const height = isVertical ? width / verticalAspect : width / horizontalAspect
+  const aspectRatio = isVertical
+    ? { aspectRatio: '2/3' }
+    : { aspectRatio: '4/3' }
 
-  const image = shouldCache ? (
-    <Image className={c} src={url} alt={title} width={width} height={height} />
-  ) : (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      className={c}
-      src={url}
-      alt={title}
-      decoding='async'
-      loading='lazy'
-      width={width}
-      height={height}
-    />
-  )
+  const image =
+    shouldCache && false ? (
+      <Image
+        className={c}
+        style={aspectRatio}
+        src={url}
+        alt={title}
+        width={width}
+        height={height}
+      />
+    ) : (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        className={c}
+        style={aspectRatio}
+        src={url}
+        alt={title}
+        decoding='async'
+        loading='lazy'
+        width={width}
+        height={height}
+      />
+    )
 
   return (
     <Link href={href} aria-label={title}>
-      <div className='max-h-lg grid max-w-lg grid-cols-[auto,1fr] grid-rows-[1fr,2fr] @container'>
+      <div className='grid h-72 grid-cols-[auto,1fr] grid-rows-[1fr,2fr] @container'>
         {image}
-        <h2 className='hidden text-4xl text-white @sm:inline'>{title}</h2>
-        <p className='hidden text-white @sm:inline'>{description}</p>
+        <h2 className='hidden text-4xl text-white @sm:mx-4 @sm:inline'>
+          {title}
+        </h2>
+        <p className='hidden text-white @sm:mx-4 @sm:inline'>{description}</p>
       </div>
     </Link>
   )
@@ -83,7 +95,7 @@ export interface MediaListProps {
 
 export default function MediaList({ media }: MediaListProps) {
   return (
-    <div className='grid grid-flow-col-dense grid-rows-2 items-center gap-4 overflow-x-auto p-4'>
+    <div className='grid-rows-[1fr, 1fr] grid w-[2000px] grid-flow-col-dense gap-4 overflow-x-auto p-4'>
       {media.map((item) => (
         <MediaTile
           id={item.id}

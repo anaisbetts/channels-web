@@ -14,7 +14,8 @@ const meta = {
     imageUrl:
       'https://image.tmdb.org/t/p/w780//eMSuKJ2e5VgYFr4SwOTLnnl5L15.jpg',
     title: 'Penguins',
-    description: "It's a penguin movie!",
+    description:
+      'A coming-of-age story about an Adélie penguin named Steve who joins millions of fellow males in the icy Antarctic spring on a quest to build a suitable nest, find a life partner and start a family.',
     isVertical: true,
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
