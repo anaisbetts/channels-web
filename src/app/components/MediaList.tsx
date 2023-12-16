@@ -29,7 +29,6 @@ export function MediaTile({
   isVertical,
 }: MediaTileProps) {
   var c = cx(
-    'flex items-center justify-center',
     'group relative transform transition-transform hover:scale-110',
     'rounded-lg object-cover group-hover:opacity-75 transition-opacity',
     'drop-shadow-xl hover:drop-shadow-2xl',
@@ -69,10 +68,10 @@ export function MediaTile({
 
   return (
     <Link href={href} aria-label={title}>
-      <div className='max-h-lg grid max-w-lg grid-cols-[200px,1fr] grid-rows-[1fr,2fr] @container'>
+      <div className='max-h-lg grid max-w-lg grid-cols-[auto,1fr] grid-rows-[1fr,2fr] @container'>
         {image}
-        <h2 className='hidden text-4xl @sm:inline'>{title}</h2>
-        <p className='hidden @sm:inline'>{description}</p>
+        <h2 className='hidden text-4xl text-white @sm:inline'>{title}</h2>
+        <p className='hidden text-white @sm:inline'>{description}</p>
       </div>
     </Link>
   )
