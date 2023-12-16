@@ -32,6 +32,7 @@ export function MediaTile({
     'group relative transform transition-transform hover:scale-110',
     'rounded-lg object-cover group-hover:opacity-75 transition-opacity',
     'drop-shadow-xl hover:drop-shadow-2xl',
+    'self-center',
     'row-span-2 col-1',
   )
 
