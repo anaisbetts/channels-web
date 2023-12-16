@@ -29,3 +29,14 @@ type Story = StoryObj<typeof meta>
 export const Primary: Story = {
   args: {},
 }
+
+export const TVSeries: Story = {
+  args: {
+    id: '184931',
+    title: 'Arrested Development',
+    description:
+      'Michael Bluth finds himself forced to stay in Orange County and run the family real estate business after his father, George Bluth Sr., is sent to prison for committing white-collar crime. He tries to juggle the wants and needs of his spoiled and eccentric family while being a good role model for his teenage son, George Michael.',
+    imageUrl: 'http://tmsimg.fancybits.co/assets/p184931_b_h6_ac.jpg',
+    isVertical: false,
+  },
+}
