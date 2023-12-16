@@ -35,6 +35,7 @@ export function MediaTile({
     'drop-shadow-xl hover:drop-shadow-2xl',
     'mx-8 my-2',
     'row-span-2 col-1',
+    isVertical ? 'aspect-w-2 aspect-h-3' : 'aspect-w-4 aspect-h-3',
   )
 
   const href = `/play/${id}`
@@ -49,22 +50,14 @@ export function MediaTile({
   }
 
   const width = isVertical ? 200 : 300
-  const height = isVertical ? width * verticalAspect : width * horizontalAspect
+  const height = isVertical ? width / verticalAspect : width / horizontalAspect
 
   const image = shouldCache ? (
-    <Image
-      className={c}
-      style={{ maxWidth: '150px' }}
-      src={url}
-      alt={title}
-      width={width}
-      height={height}
-    />
+    <Image className={c} src={url} alt={title} width={width} height={height} />
   ) : (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       className={c}
-      style={{ maxWidth: '150px' }}
       src={url}
       alt={title}
       decoding='async'
