@@ -1,6 +1,6 @@
 import type { StorybookConfig } from '@storybook/nextjs'
 
-import { dirname, join } from 'path'
+import path, { dirname, join } from 'path'
 
 /**
  * This function is used to resolve the absolute path of a package.
@@ -20,11 +20,18 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: getAbsolutePath('@storybook/nextjs'),
-    options: {},
+    options: { nextConfigPath: path.resolve(__dirname, '../next.config.js') },
   },
   docs: {
     autodocs: 'tag',
   },
   features: { experimentalNextRSC: true },
+  webpackFinal: async (config) => {
+    config.resolve ??= {}
+    config.resolve.alias ??= {}
+    config.resolve.alias['@'] = path.resolve(__dirname, '../src')
+
+    return config
+  },
 }
 export default config
