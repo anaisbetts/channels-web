@@ -46,6 +46,7 @@ export default async function Home() {
   // Generate some interesting lists
   const genres = groupByGenre([...movieList, ...showList])
   const topFive = sortGenresByPopularity(genres, 3)
+  const newAndNotableList = newAndNotable([...movieList, ...showList])
 
   const topFiveMarkup = topFive.map(([genre, movies]) => (
     <MediaListWithHeader
@@ -60,7 +61,7 @@ export default async function Home() {
       <SearchResult allMovies={movieList}>
         <MediaListWithHeader
           header='New and Notable'
-          media={newAndNotable([...movieList, ...showList])}
+          media={newAndNotableList}
         />
 
         <>{topFiveMarkup}</>

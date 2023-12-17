@@ -199,3 +199,15 @@ export function getTitleForMedia(media: Media): string {
 
   return (media as Movie).title
 }
+
+export function getDescriptionForMedia(media: Media): string {
+  if (isTVShow(media)) {
+    return (media as TVShow).summary
+  }
+
+  if (isEpisode(media)) {
+    return (media as Episode).full_summary ?? (media as Episode).summary!
+  }
+
+  return (media as Movie).full_summary ?? (media as Movie).summary!
+}

@@ -22,6 +22,11 @@ export function isCacheableImage(url: string) {
     finalUrl = `${u.origin}${u.pathname}`
   }
 
+  finalUrl = finalUrl.replace(
+    /\/\/fanc.tmsimg.com\//i,
+    '//tmsimg.fancybits.co/',
+  )
+
   const ret = cachedHosts[u.origin] === true
   return { shouldCache: ret, url: finalUrl }
 }

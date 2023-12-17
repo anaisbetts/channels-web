@@ -1,6 +1,11 @@
 import { cx } from '@/lib/actions/utility'
 import { i } from '@/lib/logger-client'
-import { Media, getTitleForMedia, isMovie } from '@/lib/types'
+import {
+  Media,
+  getDescriptionForMedia,
+  getTitleForMedia,
+  isMovie,
+} from '@/lib/types'
 import Image from 'next/image'
 import Link from 'next/link'
 import { isCacheableImage } from '../utility'
@@ -9,19 +14,26 @@ export interface MediaTileProps {
   id: string
   imageUrl: string
   title: string
+  description: string
   isVertical: boolean
 }
 
 const verticalAspect = 2 / 3
 const horizontalAspect = 4 / 3
 
-export function MediaTile({ id, imageUrl, title, isVertical }: MediaTileProps) {
+export function MediaTile({
+  id,
+  imageUrl,
+  title,
+  description,
+  isVertical,
+}: MediaTileProps) {
   var c = cx(
-    'flex items-center justify-center',
     'group relative transform transition-transform hover:scale-110',
     'rounded-lg object-cover group-hover:opacity-75 transition-opacity',
     'drop-shadow-xl hover:drop-shadow-2xl',
-    'mx-8 my-2',
+    'self-center',
+    'row-span-2 col-1',
   )
 
   const href = `/play/${id}`
@@ -36,12 +48,15 @@ export function MediaTile({ id, imageUrl, title, isVertical }: MediaTileProps) {
   }
 
   const width = isVertical ? 200 : 300
-  const height = isVertical ? width * verticalAspect : width * horizontalAspect
+  const height = isVertical ? width / verticalAspect : width / horizontalAspect
+  const aspectRatio = isVertical
+    ? { aspectRatio: '2/3' }
+    : { aspectRatio: '4/3' }
 
   const image = shouldCache ? (
     <Image
       className={c}
-      style={{ maxWidth: '150px' }}
+      style={aspectRatio}
       src={url}
       alt={title}
       width={width}
@@ -51,7 +66,7 @@ export function MediaTile({ id, imageUrl, title, isVertical }: MediaTileProps) {
     // eslint-disable-next-line @next/next/no-img-element
     <img
       className={c}
-      style={{ maxWidth: '150px' }}
+      style={aspectRatio}
       src={url}
       alt={title}
       decoding='async'
@@ -62,8 +77,20 @@ export function MediaTile({ id, imageUrl, title, isVertical }: MediaTileProps) {
   )
 
   return (
-    <Link href={href} aria-label={title}>
-      {image}
+    <Link
+      href={href}
+      aria-label={title}
+      className='overflow-visible drop-shadow-xl hover:drop-shadow-2xl'
+    >
+      <div className='grid h-72 max-w-[600px] grid-cols-[auto,1fr] grid-rows-[1fr,2fr] overflow-visible @container'>
+        {image}
+        <h2 className='hidden text-4xl text-white @sm:mx-4 @sm:inline'>
+          {title}
+        </h2>
+        <p className='hidden text-white @sm:mx-4 @sm:my-4 @sm:inline'>
+          {description}
+        </p>
+      </div>
     </Link>
   )
 }
@@ -74,12 +101,13 @@ export interface MediaListProps {
 
 export default function MediaList({ media }: MediaListProps) {
   return (
-    <div className='grid grid-flow-col-dense grid-rows-2 items-center gap-4 overflow-x-auto p-4'>
+    <div className='hide-scroll grid auto-cols-[minmax(200px,1fr)] grid-flow-col grid-rows-2 gap-8 overflow-x-auto p-4'>
       {media.map((item) => (
         <MediaTile
           id={item.id}
           imageUrl={item.image_url}
           title={getTitleForMedia(item)}
+          description={getDescriptionForMedia(item)}
           key={item.id}
           isVertical={isMovie(item)}
         />
