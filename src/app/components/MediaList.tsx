@@ -31,7 +31,7 @@ export function MediaTile({
   var c = cx(
     'group relative transform transition-transform hover:scale-110',
     'rounded-lg object-cover group-hover:opacity-75 transition-opacity',
-    'drop-shadow-xl hover:drop-shadow-2xl',
+    'drop-shadow-l hover:drop-shadow-xl',
     'self-center',
     'row-span-2 col-1',
   )
@@ -80,7 +80,7 @@ export function MediaTile({
     <Link
       href={href}
       aria-label={title}
-      className='overflow-visible drop-shadow-xl hover:drop-shadow-2xl'
+      className='drop-shadow-l overflow-visible hover:drop-shadow-xl'
     >
       <div className='grid h-72 max-w-[600px] grid-cols-[auto,1fr] grid-rows-[1fr,2fr] overflow-visible @container'>
         {image}
@@ -101,7 +101,7 @@ export interface MediaListProps {
 
 export default function MediaList({ media }: MediaListProps) {
   return (
-    <div className='hide-scroll grid auto-cols-[minmax(200px,1fr)] grid-flow-col grid-rows-2 gap-8 overflow-x-auto p-4'>
+    <div className='hide-scroll grid auto-cols-[minmax(200px,1fr)] grid-flow-col grid-rows-2 gap-8 overflow-visible overflow-x-auto px-4 py-16'>
       {media.map((item) => (
         <MediaTile
           id={item.id}
