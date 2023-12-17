@@ -41,7 +41,7 @@ export default function ActualLayout({
         )}
       </nav>
 
-      <main className='overflow-y-auto py-2'>{children}</main>
+      <main className='hide-scroll overflow-y-auto px-2 py-2'>{children}</main>
 
       <footer className='h-6 bg-gradient-to-r from-purple-700 to-blue-700'></footer>
     </SearchContext.Provider>

@@ -77,8 +77,12 @@ export function MediaTile({
   )
 
   return (
-    <Link href={href} aria-label={title}>
-      <div className='grid h-72 max-w-[600px] grid-cols-[auto,1fr] grid-rows-[1fr,2fr] @container'>
+    <Link
+      href={href}
+      aria-label={title}
+      className='overflow-visible drop-shadow-xl hover:drop-shadow-2xl'
+    >
+      <div className='grid h-72 max-w-[600px] grid-cols-[auto,1fr] grid-rows-[1fr,2fr] overflow-visible @container'>
         {image}
         <h2 className='hidden text-4xl text-white @sm:mx-4 @sm:inline'>
           {title}
@@ -97,7 +101,7 @@ export interface MediaListProps {
 
 export default function MediaList({ media }: MediaListProps) {
   return (
-    <div className='grid-rows-[1fr, 1fr] grid w-[2000px] grid-flow-col-dense gap-4 overflow-x-auto p-4'>
+    <div className='hide-scroll grid auto-cols-[minmax(200px,1fr)] grid-flow-col grid-rows-2 gap-8 overflow-x-auto p-4'>
       {media.map((item) => (
         <MediaTile
           id={item.id}

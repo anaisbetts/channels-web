@@ -520,3 +520,29 @@
 .ptr--box {
   margin-bottom: -13px !important;
 }
+
+* {
+  overflow: clip;
+}
+
+.hide-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+}
+
+.hide-scroll::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.hide-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(192, 192, 192, 0.8);
+  border-radius: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.hide-scroll:hover::-webkit-scrollbar {
+  background-color: rgba(192, 192, 192, 0.2);
+  border-radius: 16px;
+  transition: background-color 0.3s ease;
+}
