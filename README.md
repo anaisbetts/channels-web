@@ -4,7 +4,9 @@ its channels but on the web browser, for normies
 
 ```bash
 npm i
-npx turbo dev
+npx turbo dev  # just the app
+## or
+npx turbo dev-full   # app + storybook
 ```
 
 ## to production
